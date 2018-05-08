@@ -1,0 +1,482 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> definition
+Rule 1     atom -> LPAREN expr RPAREN
+Rule 2     atom -> LBRACK expr RBRACK
+Rule 3     atom -> NAME
+Rule 4     atom -> TOK_NAME
+Rule 5     atom -> LITERAL
+Rule 6     atom -> BACKTICK
+Rule 7     definition -> NAME COLON expr
+Rule 8     expr -> term PIPE expr
+Rule 9     expr -> term
+Rule 10    simple -> atom TIMES
+Rule 11    simple -> atom PLUS
+Rule 12    simple -> TILDE atom
+Rule 13    simple -> atom
+Rule 14    term -> simple term
+Rule 15    term -> simple
+
+Terminals, with rules where they appear
+
+BACKTICK             : 6
+COLON                : 7
+LBRACK               : 2
+LITERAL              : 5
+LPAREN               : 1
+NAME                 : 3 7
+PIPE                 : 8
+PLUS                 : 11
+RBRACK               : 2
+RPAREN               : 1
+TILDE                : 12
+TIMES                : 10
+TOK_NAME             : 4
+error                : 
+
+Nonterminals, with rules where they appear
+
+atom                 : 10 11 12 13
+definition           : 0
+expr                 : 1 2 7 8
+simple               : 14 15
+term                 : 8 9 14
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . definition
+    (7) definition -> . NAME COLON expr
+
+    NAME            shift and go to state 2
+
+    definition                     shift and go to state 1
+
+state 1
+
+    (0) S' -> definition .
+
+
+
+state 2
+
+    (7) definition -> NAME . COLON expr
+
+    COLON           shift and go to state 3
+
+
+state 3
+
+    (7) definition -> NAME COLON . expr
+    (8) expr -> . term PIPE expr
+    (9) expr -> . term
+    (14) term -> . simple term
+    (15) term -> . simple
+    (10) simple -> . atom TIMES
+    (11) simple -> . atom PLUS
+    (12) simple -> . TILDE atom
+    (13) simple -> . atom
+    (1) atom -> . LPAREN expr RPAREN
+    (2) atom -> . LBRACK expr RBRACK
+    (3) atom -> . NAME
+    (4) atom -> . TOK_NAME
+    (5) atom -> . LITERAL
+    (6) atom -> . BACKTICK
+
+    TILDE           shift and go to state 9
+    LPAREN          shift and go to state 10
+    LBRACK          shift and go to state 11
+    NAME            shift and go to state 4
+    TOK_NAME        shift and go to state 12
+    LITERAL         shift and go to state 13
+    BACKTICK        shift and go to state 14
+
+    expr                           shift and go to state 5
+    term                           shift and go to state 6
+    simple                         shift and go to state 7
+    atom                           shift and go to state 8
+
+state 4
+
+    (3) atom -> NAME .
+
+    TIMES           reduce using rule 3 (atom -> NAME .)
+    PLUS            reduce using rule 3 (atom -> NAME .)
+    TILDE           reduce using rule 3 (atom -> NAME .)
+    LPAREN          reduce using rule 3 (atom -> NAME .)
+    LBRACK          reduce using rule 3 (atom -> NAME .)
+    NAME            reduce using rule 3 (atom -> NAME .)
+    TOK_NAME        reduce using rule 3 (atom -> NAME .)
+    LITERAL         reduce using rule 3 (atom -> NAME .)
+    BACKTICK        reduce using rule 3 (atom -> NAME .)
+    PIPE            reduce using rule 3 (atom -> NAME .)
+    $end            reduce using rule 3 (atom -> NAME .)
+    RPAREN          reduce using rule 3 (atom -> NAME .)
+    RBRACK          reduce using rule 3 (atom -> NAME .)
+
+
+state 5
+
+    (7) definition -> NAME COLON expr .
+
+    $end            reduce using rule 7 (definition -> NAME COLON expr .)
+
+
+state 6
+
+    (8) expr -> term . PIPE expr
+    (9) expr -> term .
+
+    PIPE            shift and go to state 15
+    $end            reduce using rule 9 (expr -> term .)
+    RPAREN          reduce using rule 9 (expr -> term .)
+    RBRACK          reduce using rule 9 (expr -> term .)
+
+
+state 7
+
+    (14) term -> simple . term
+    (15) term -> simple .
+    (14) term -> . simple term
+    (15) term -> . simple
+    (10) simple -> . atom TIMES
+    (11) simple -> . atom PLUS
+    (12) simple -> . TILDE atom
+    (13) simple -> . atom
+    (1) atom -> . LPAREN expr RPAREN
+    (2) atom -> . LBRACK expr RBRACK
+    (3) atom -> . NAME
+    (4) atom -> . TOK_NAME
+    (5) atom -> . LITERAL
+    (6) atom -> . BACKTICK
+
+    PIPE            reduce using rule 15 (term -> simple .)
+    $end            reduce using rule 15 (term -> simple .)
+    RPAREN          reduce using rule 15 (term -> simple .)
+    RBRACK          reduce using rule 15 (term -> simple .)
+    TILDE           shift and go to state 9
+    LPAREN          shift and go to state 10
+    LBRACK          shift and go to state 11
+    NAME            shift and go to state 4
+    TOK_NAME        shift and go to state 12
+    LITERAL         shift and go to state 13
+    BACKTICK        shift and go to state 14
+
+    simple                         shift and go to state 7
+    term                           shift and go to state 16
+    atom                           shift and go to state 8
+
+state 8
+
+    (10) simple -> atom . TIMES
+    (11) simple -> atom . PLUS
+    (13) simple -> atom .
+
+    TIMES           shift and go to state 17
+    PLUS            shift and go to state 18
+    TILDE           reduce using rule 13 (simple -> atom .)
+    LPAREN          reduce using rule 13 (simple -> atom .)
+    LBRACK          reduce using rule 13 (simple -> atom .)
+    NAME            reduce using rule 13 (simple -> atom .)
+    TOK_NAME        reduce using rule 13 (simple -> atom .)
+    LITERAL         reduce using rule 13 (simple -> atom .)
+    BACKTICK        reduce using rule 13 (simple -> atom .)
+    PIPE            reduce using rule 13 (simple -> atom .)
+    $end            reduce using rule 13 (simple -> atom .)
+    RPAREN          reduce using rule 13 (simple -> atom .)
+    RBRACK          reduce using rule 13 (simple -> atom .)
+
+
+state 9
+
+    (12) simple -> TILDE . atom
+    (1) atom -> . LPAREN expr RPAREN
+    (2) atom -> . LBRACK expr RBRACK
+    (3) atom -> . NAME
+    (4) atom -> . TOK_NAME
+    (5) atom -> . LITERAL
+    (6) atom -> . BACKTICK
+
+    LPAREN          shift and go to state 10
+    LBRACK          shift and go to state 11
+    NAME            shift and go to state 4
+    TOK_NAME        shift and go to state 12
+    LITERAL         shift and go to state 13
+    BACKTICK        shift and go to state 14
+
+    atom                           shift and go to state 19
+
+state 10
+
+    (1) atom -> LPAREN . expr RPAREN
+    (8) expr -> . term PIPE expr
+    (9) expr -> . term
+    (14) term -> . simple term
+    (15) term -> . simple
+    (10) simple -> . atom TIMES
+    (11) simple -> . atom PLUS
+    (12) simple -> . TILDE atom
+    (13) simple -> . atom
+    (1) atom -> . LPAREN expr RPAREN
+    (2) atom -> . LBRACK expr RBRACK
+    (3) atom -> . NAME
+    (4) atom -> . TOK_NAME
+    (5) atom -> . LITERAL
+    (6) atom -> . BACKTICK
+
+    TILDE           shift and go to state 9
+    LPAREN          shift and go to state 10
+    LBRACK          shift and go to state 11
+    NAME            shift and go to state 4
+    TOK_NAME        shift and go to state 12
+    LITERAL         shift and go to state 13
+    BACKTICK        shift and go to state 14
+
+    expr                           shift and go to state 20
+    term                           shift and go to state 6
+    simple                         shift and go to state 7
+    atom                           shift and go to state 8
+
+state 11
+
+    (2) atom -> LBRACK . expr RBRACK
+    (8) expr -> . term PIPE expr
+    (9) expr -> . term
+    (14) term -> . simple term
+    (15) term -> . simple
+    (10) simple -> . atom TIMES
+    (11) simple -> . atom PLUS
+    (12) simple -> . TILDE atom
+    (13) simple -> . atom
+    (1) atom -> . LPAREN expr RPAREN
+    (2) atom -> . LBRACK expr RBRACK
+    (3) atom -> . NAME
+    (4) atom -> . TOK_NAME
+    (5) atom -> . LITERAL
+    (6) atom -> . BACKTICK
+
+    TILDE           shift and go to state 9
+    LPAREN          shift and go to state 10
+    LBRACK          shift and go to state 11
+    NAME            shift and go to state 4
+    TOK_NAME        shift and go to state 12
+    LITERAL         shift and go to state 13
+    BACKTICK        shift and go to state 14
+
+    expr                           shift and go to state 21
+    term                           shift and go to state 6
+    simple                         shift and go to state 7
+    atom                           shift and go to state 8
+
+state 12
+
+    (4) atom -> TOK_NAME .
+
+    TIMES           reduce using rule 4 (atom -> TOK_NAME .)
+    PLUS            reduce using rule 4 (atom -> TOK_NAME .)
+    TILDE           reduce using rule 4 (atom -> TOK_NAME .)
+    LPAREN          reduce using rule 4 (atom -> TOK_NAME .)
+    LBRACK          reduce using rule 4 (atom -> TOK_NAME .)
+    NAME            reduce using rule 4 (atom -> TOK_NAME .)
+    TOK_NAME        reduce using rule 4 (atom -> TOK_NAME .)
+    LITERAL         reduce using rule 4 (atom -> TOK_NAME .)
+    BACKTICK        reduce using rule 4 (atom -> TOK_NAME .)
+    PIPE            reduce using rule 4 (atom -> TOK_NAME .)
+    $end            reduce using rule 4 (atom -> TOK_NAME .)
+    RPAREN          reduce using rule 4 (atom -> TOK_NAME .)
+    RBRACK          reduce using rule 4 (atom -> TOK_NAME .)
+
+
+state 13
+
+    (5) atom -> LITERAL .
+
+    TIMES           reduce using rule 5 (atom -> LITERAL .)
+    PLUS            reduce using rule 5 (atom -> LITERAL .)
+    TILDE           reduce using rule 5 (atom -> LITERAL .)
+    LPAREN          reduce using rule 5 (atom -> LITERAL .)
+    LBRACK          reduce using rule 5 (atom -> LITERAL .)
+    NAME            reduce using rule 5 (atom -> LITERAL .)
+    TOK_NAME        reduce using rule 5 (atom -> LITERAL .)
+    LITERAL         reduce using rule 5 (atom -> LITERAL .)
+    BACKTICK        reduce using rule 5 (atom -> LITERAL .)
+    PIPE            reduce using rule 5 (atom -> LITERAL .)
+    $end            reduce using rule 5 (atom -> LITERAL .)
+    RPAREN          reduce using rule 5 (atom -> LITERAL .)
+    RBRACK          reduce using rule 5 (atom -> LITERAL .)
+
+
+state 14
+
+    (6) atom -> BACKTICK .
+
+    TIMES           reduce using rule 6 (atom -> BACKTICK .)
+    PLUS            reduce using rule 6 (atom -> BACKTICK .)
+    TILDE           reduce using rule 6 (atom -> BACKTICK .)
+    LPAREN          reduce using rule 6 (atom -> BACKTICK .)
+    LBRACK          reduce using rule 6 (atom -> BACKTICK .)
+    NAME            reduce using rule 6 (atom -> BACKTICK .)
+    TOK_NAME        reduce using rule 6 (atom -> BACKTICK .)
+    LITERAL         reduce using rule 6 (atom -> BACKTICK .)
+    BACKTICK        reduce using rule 6 (atom -> BACKTICK .)
+    PIPE            reduce using rule 6 (atom -> BACKTICK .)
+    $end            reduce using rule 6 (atom -> BACKTICK .)
+    RPAREN          reduce using rule 6 (atom -> BACKTICK .)
+    RBRACK          reduce using rule 6 (atom -> BACKTICK .)
+
+
+state 15
+
+    (8) expr -> term PIPE . expr
+    (8) expr -> . term PIPE expr
+    (9) expr -> . term
+    (14) term -> . simple term
+    (15) term -> . simple
+    (10) simple -> . atom TIMES
+    (11) simple -> . atom PLUS
+    (12) simple -> . TILDE atom
+    (13) simple -> . atom
+    (1) atom -> . LPAREN expr RPAREN
+    (2) atom -> . LBRACK expr RBRACK
+    (3) atom -> . NAME
+    (4) atom -> . TOK_NAME
+    (5) atom -> . LITERAL
+    (6) atom -> . BACKTICK
+
+    TILDE           shift and go to state 9
+    LPAREN          shift and go to state 10
+    LBRACK          shift and go to state 11
+    NAME            shift and go to state 4
+    TOK_NAME        shift and go to state 12
+    LITERAL         shift and go to state 13
+    BACKTICK        shift and go to state 14
+
+    term                           shift and go to state 6
+    expr                           shift and go to state 22
+    simple                         shift and go to state 7
+    atom                           shift and go to state 8
+
+state 16
+
+    (14) term -> simple term .
+
+    PIPE            reduce using rule 14 (term -> simple term .)
+    $end            reduce using rule 14 (term -> simple term .)
+    RPAREN          reduce using rule 14 (term -> simple term .)
+    RBRACK          reduce using rule 14 (term -> simple term .)
+
+
+state 17
+
+    (10) simple -> atom TIMES .
+
+    TILDE           reduce using rule 10 (simple -> atom TIMES .)
+    LPAREN          reduce using rule 10 (simple -> atom TIMES .)
+    LBRACK          reduce using rule 10 (simple -> atom TIMES .)
+    NAME            reduce using rule 10 (simple -> atom TIMES .)
+    TOK_NAME        reduce using rule 10 (simple -> atom TIMES .)
+    LITERAL         reduce using rule 10 (simple -> atom TIMES .)
+    BACKTICK        reduce using rule 10 (simple -> atom TIMES .)
+    PIPE            reduce using rule 10 (simple -> atom TIMES .)
+    $end            reduce using rule 10 (simple -> atom TIMES .)
+    RPAREN          reduce using rule 10 (simple -> atom TIMES .)
+    RBRACK          reduce using rule 10 (simple -> atom TIMES .)
+
+
+state 18
+
+    (11) simple -> atom PLUS .
+
+    TILDE           reduce using rule 11 (simple -> atom PLUS .)
+    LPAREN          reduce using rule 11 (simple -> atom PLUS .)
+    LBRACK          reduce using rule 11 (simple -> atom PLUS .)
+    NAME            reduce using rule 11 (simple -> atom PLUS .)
+    TOK_NAME        reduce using rule 11 (simple -> atom PLUS .)
+    LITERAL         reduce using rule 11 (simple -> atom PLUS .)
+    BACKTICK        reduce using rule 11 (simple -> atom PLUS .)
+    PIPE            reduce using rule 11 (simple -> atom PLUS .)
+    $end            reduce using rule 11 (simple -> atom PLUS .)
+    RPAREN          reduce using rule 11 (simple -> atom PLUS .)
+    RBRACK          reduce using rule 11 (simple -> atom PLUS .)
+
+
+state 19
+
+    (12) simple -> TILDE atom .
+
+    TILDE           reduce using rule 12 (simple -> TILDE atom .)
+    LPAREN          reduce using rule 12 (simple -> TILDE atom .)
+    LBRACK          reduce using rule 12 (simple -> TILDE atom .)
+    NAME            reduce using rule 12 (simple -> TILDE atom .)
+    TOK_NAME        reduce using rule 12 (simple -> TILDE atom .)
+    LITERAL         reduce using rule 12 (simple -> TILDE atom .)
+    BACKTICK        reduce using rule 12 (simple -> TILDE atom .)
+    PIPE            reduce using rule 12 (simple -> TILDE atom .)
+    $end            reduce using rule 12 (simple -> TILDE atom .)
+    RPAREN          reduce using rule 12 (simple -> TILDE atom .)
+    RBRACK          reduce using rule 12 (simple -> TILDE atom .)
+
+
+state 20
+
+    (1) atom -> LPAREN expr . RPAREN
+
+    RPAREN          shift and go to state 23
+
+
+state 21
+
+    (2) atom -> LBRACK expr . RBRACK
+
+    RBRACK          shift and go to state 24
+
+
+state 22
+
+    (8) expr -> term PIPE expr .
+
+    $end            reduce using rule 8 (expr -> term PIPE expr .)
+    RPAREN          reduce using rule 8 (expr -> term PIPE expr .)
+    RBRACK          reduce using rule 8 (expr -> term PIPE expr .)
+
+
+state 23
+
+    (1) atom -> LPAREN expr RPAREN .
+
+    TIMES           reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    TILDE           reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    LPAREN          reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    LBRACK          reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    NAME            reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    TOK_NAME        reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    LITERAL         reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    BACKTICK        reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    PIPE            reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    $end            reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+    RBRACK          reduce using rule 1 (atom -> LPAREN expr RPAREN .)
+
+
+state 24
+
+    (2) atom -> LBRACK expr RBRACK .
+
+    TIMES           reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    PLUS            reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    TILDE           reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    LPAREN          reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    LBRACK          reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    NAME            reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    TOK_NAME        reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    LITERAL         reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    BACKTICK        reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    PIPE            reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    $end            reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    RPAREN          reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+    RBRACK          reduce using rule 2 (atom -> LBRACK expr RBRACK .)
+

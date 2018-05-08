@@ -1,0 +1,4 @@
+export (msg1, msg2);
+
+msg1 = "hello";
+msg2 = "world!";

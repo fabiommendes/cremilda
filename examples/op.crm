@@ -1,0 +1,4 @@
+answer = 40 + 2;
+answer = 20 + 20 + 2;
+answer = 2 * 20 + 2;
+answer = (20 + 1) * 2;

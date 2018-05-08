@@ -1,0 +1,13 @@
+ox-parser~=0.2.0
+sidekick~=0.2.0
+
+[dev]
+manuel>=1.9.0
+pytest>=3.4.2
+pytest-cov>=2.5.1
+coverage>=4.4.1
+mock>=2.0.0
+
+[docs]
+docutils
+sphinx-autobuild

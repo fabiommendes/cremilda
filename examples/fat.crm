@@ -1,0 +1,5 @@
+fat(n) =
+    if n < 1 then
+        1
+    else
+        n * fat(n - 1);
