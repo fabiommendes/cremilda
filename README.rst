@@ -41,12 +41,13 @@ e tagged unions::
     # Listas (simplesmente encadeadas) (em construção)
     x = [1, 2, 3, 4]
 
-    # Records (em construção)
-    x = {name = "John", age = 42}
+    # Records/Structs/Objects (em construção)
+    x = {name: "John", age: 42}
 
     # Tagged unions/Enums (em construção)
-    x = Nil
-    y = Cons (x, Nil)
+    x = Nothing
+    y = Just 42 
+    
 
 
 Expressões
@@ -70,7 +71,7 @@ Números aceitam as operações básicas::
 
     x = 2 + 1
     y = 2 * 4
-    z = 3 ^ 2
+    z = 3 ** 2
     w = 4 / 2
     k = 4 - 2
 
@@ -84,11 +85,12 @@ Um módulo deve declarar as variáveis e operadores na primeira linha::
 
     export (Bool, name, age, +, -);
 
+
 Em seguida, declara os imports utilizados::
 
-    import base;  # todos nomes
-    import base exposing (Foo, bar, baz);  # especifica alguns nomes
-    import base exposing (Foo => Foobar, bar, baz);  # importa sob nome diferente
+    import "module";  # todos nomes
+    import "module" exposing (Foo, bar, baz);  # especifica alguns nomes
+    import "module" exposing (Foo => Foobar, bar, baz);  # importa sob nome diferente
 
 Novos tipos::
 

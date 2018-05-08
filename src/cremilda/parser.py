@@ -35,7 +35,7 @@ def make_parser():
         # ("import : ...", ...),
 
         # Declaração de funções e variáveis
-        ("vardef  : NAME EQ expr", vardef),
+        ("vardef  : NAME '=' expr", vardef),
         ("fundef  : NAME LPAR defargs RPAR EQ expr", fundef),
         ("defargs : NAME", lambda x: [x]),
         ("defargs : NAME COMMA defargs", lambda x, _, xs: [x, *xs]),

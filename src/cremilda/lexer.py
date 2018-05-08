@@ -23,9 +23,9 @@ class Lexer(ox.Lexer):
     COMMA = r'\,'
 
     # Palavras reservadas
-    r_IF = r'if'
-    r_THEN = r'then'
-    r_ELSE = r'else'
+    r_IF = 'if'
+    r_THEN = 'then'
+    r_ELSE = 'else'
 
 
 #
