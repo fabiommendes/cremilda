@@ -129,7 +129,7 @@ class TestCompilationToPythonModule:
     @flag('branca')
     def test_support_for_unary_not(self):
         # Equivalente a chamar a função builtin negate
-        assert self.get_main('main = not true;') == False
+        assert self.get_main('main = not true;') is False
         assert self.get_main('main = equal(not true, negate(true));')
 
     @flag('preta++')
@@ -241,9 +241,9 @@ class TestCompilationToPythonModule:
         assert str(value) == 'Value(42.0)'
         assert isinstance(value, sk.Union)
 
-        Value = type(value)
+        value_class = type(value)
         with pytest.raises(ValueError):
-            Value("foo")
+            value_class("foo")
 
     @flag('vermelha')
     def test_support_type_definition_with_generic_type(self):
@@ -253,7 +253,6 @@ class TestCompilationToPythonModule:
                               'main = Value 42')
         assert str(value) == 'Value(42.0)'
         assert isinstance(value, sk.Union)
-
 
     @flag('amarela')
     def test_exporting_type_also_exports_its_sub_types(self):

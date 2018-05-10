@@ -14,7 +14,7 @@ class TestEmmitToPythonStmt:
         py_src = py_ast.source()
         if py_src != python:
             assert compile(py_src, '<input>', 'exec') \
-                   == compile(python, '<input>', 'exec')
+                == compile(python, '<input>', 'exec')
 
     def expr(self, src):
         return self.rhs('x = %s;' % src)

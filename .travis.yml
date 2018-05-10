@@ -21,3 +21,4 @@ script:
 # Register code coverage in coveralls
 after_success:
   codecov
+
