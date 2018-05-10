@@ -114,7 +114,7 @@ class TestCompilationToPythonModule:
             ''') == 43
 
     # Operadores
-    @flag('branca')
+    # @flag('branca')
     def test_support_for_unary_minus(self):
         # Equivalente a chamar a função builtin neg
         assert self.get_main('main = -2;') == -2.0

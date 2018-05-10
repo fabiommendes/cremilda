@@ -50,7 +50,7 @@ def make_parser():
         ("elem : value OP value", op_call),
         ("elem : ifexpr", identity),
         ("elem : '+' value", lambda x: Expr.Call(Expr.Name('pos'), [x])),
-        # ("elem : '-' value", )
+        ("elem : '-' value", lambda x: Expr.Call(Expr.Name('neg'), [x])),
         # ("elem : 'not' value", )
         # ("elem : unaryop", identity),
         # ("elem : lambda", identity),
