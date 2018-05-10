@@ -14,7 +14,7 @@ Cremilda* is a minimalist functional educational programming language developed 
 teach a compilers course at University of Brasília/Brazil. That's why the rest
 of this readme is in Portuguese ;)
 
-*provisional name.
+* provisional name.
 
 Introdução
 ==========
