@@ -120,7 +120,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('main = -2;') == -2.0
         assert self.get_main('main = equal(-2, neg(2));')
 
-    @flag('branca')
+    # @flag('branca')
     def test_support_for_unary_plus(self):
         # Equivalente a chamar a função builtin pos
         assert self.get_main('main = +2;') == 2.0
