@@ -1,5 +1,5 @@
 from cremilda import parse
-from cremilda.emitter import to_python
+from cremilda.compiler.emitter import to_python
 
 from ox.backend.python import let, var
 

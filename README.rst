@@ -1,3 +1,12 @@
+.. image:: https://travis-ci.org/fabiommendes/cremilda.svg?branch=master
+    :target: https://travis-ci.org/fabiommendes/cremilda
+.. image:: https://codecov.io/gh/fabiommendes/cremilda/branch/master/graph/badge.svg?
+    :target: https://codecov.io/gh/fabiommendes/cremilda
+.. image:: https://codeclimate.com/github/fabiommendes/cremilda/badges/gpa.svg?
+    :target: https://codeclimate.com/github/fabiommendes/cremilda
+.. image:: https://codeclimate.com/github/fabiommendes/cremilda/badges/issue_count.svg?
+    :target: https://codeclimate.com/github/fabiommendes/cremilda
+
 Cremilda Language
 ==================
 
@@ -46,8 +55,8 @@ e tagged unions::
 
     # Tagged unions/Enums (em construção)
     x = Nothing
-    y = Just 42 
-    
+    y = Just 42
+
 
 
 Expressões
@@ -88,9 +97,17 @@ Um módulo deve declarar as variáveis e operadores na primeira linha::
 
 Em seguida, declara os imports utilizados::
 
-    import "module";  # todos nomes
-    import "module" exposing (Foo, bar, baz);  # especifica alguns nomes
-    import "module" exposing (Foo => Foobar, bar, baz);  # importa sob nome diferente
+    # importa todos nomes
+    import "module";
+
+    # qualificado: funções são acessadas como mod.func
+    import "module" as mod;
+
+    # especifica alguns nomes
+    import (Foo, bar, baz) from "module";
+
+    # importa sob nome diferente
+    import (Foo as Foobar, bar, baz) from "module";
 
 Novos tipos::
 
@@ -103,12 +120,12 @@ Novos tipos::
 
 Operadores::
 
-    right-operator 9 (:) => cons;
-    left-operator 8 (?+) => try_add;
-    left-operator 8 (?-) => try_sub;
-    left-operator 9 (?*) => try_mul;
-    left-operator 9 (?/) => try_div;
-    left-operator 9 (|>) => fcall;
+    # Precedência e associatividade explícitas
+    left_op 3 (++) as concat;
+    right_op 1 (::) as cons;
+
+    # Precedência implícita
+    left_op (.+) as try_add from (+);
 
 Por último, declaramos as constantes e funções do módulo::
 
@@ -172,14 +189,5 @@ Expressões case::
 
 Funções anônimas::
 
-    doubles = x => x + x
-
-
-Avançado
---------
-
-Acesso a funções do Python::
-
-    concat(x, y) = $str.__add__(x, y)
-    add(x, y) = $operator.add(x, y)
+    doubles = fn (x) => x + x;
 

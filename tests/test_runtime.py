@@ -1,4 +1,4 @@
-from cremilda_runtime.base_types import adt
+from cremilda.runtime.base import adt
 
 
 class TestTypeFactories:

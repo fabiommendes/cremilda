@@ -3,7 +3,7 @@ import sys
 
 import click
 
-from cremilda.compiler import compile_source
+from .compiler import transpile, compile_module
 
 
 # Usamos a biblioteca click: http://click.pocoo.org/
@@ -24,15 +24,13 @@ def main(path, output, run):
     """
     with click.open_file(path, 'r') as F:
         source = F.read()
-    result = compile_source(source)
 
     if run:
-        namespace = {}
-        code = compile(result, path, 'exec')
-        exec(code, namespace)
-        run_main_object(namespace.get('__main'))
+        mod = compile_module(source, '__main__', path, load=False)
+        run_main_object(getattr(mod, '__main', None))
     else:
-        print(result, file=output or sys.stdout)
+        py_source = transpile(source)
+        print(py_source, file=output or sys.stdout)
 
 
 def run_main_object(main):

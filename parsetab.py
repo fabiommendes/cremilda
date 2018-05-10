@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'moduleBOOL COMMA ELSE_ EQ IF_ LPAR NAME NUMBER OP RPAR SEMICOLON_ STRING THEN_ TYPENAMEatom : NUMBERatom : STRINGatom : BOOLatom : TYPENAMEatom : NAMEdefargs : NAMEdefargs : NAME COMMA defargselem : valueelem : value OP valueelem : ifexprexpr : elemfargs : elem COMMA fargsfargs : elemfcall : value LPAR RPARfcall : value LPAR fargs RPARfundef : NAME LPAR defargs RPAR EQ exprifexpr : IF_ value THEN_ elem ELSE_ elemmodule : statement SEMICOLON_module : statement SEMICOLON_ modulestatement : vardefstatement : fundefvalue : atomvalue : fcallvalue : LPAR expr RPARvardef : NAME EQ expr'
+_lr_signature = 'moduleCOMMA_ ELSE_ EQUAL_ FALSE IF_ LPAREN_ NAME NUMBER OP RPAREN_ SEMICOLON_ STRING THEN_ TRUE TYPENAMEatom : NUMBERatom : STRINGatom : TRUEatom : FALSEatom : TYPENAMEatom : NAMEdefargs : NAMEdefargs : NAME COMMA_ defargselem : valueelem : value OP valueelem : ifexprexpr : elemfargs : elemfargs : elem COMMA_ fargsfcall : value LPAREN_ RPAREN_fcall : value LPAREN_ fargs RPAREN_fundef : NAME LPAREN_ defargs RPAREN_ EQUAL_ exprifexpr : IF_ value THEN_ elem ELSE_ elemmodule : statement SEMICOLON_module : statement SEMICOLON_ modulestatement : vardefstatement : fundefvalue : atomvalue : fcallvalue : LPAREN_ expr RPAREN_vardef : NAME EQUAL_ expr'
     
-_lr_action_items = {'NAME':([0,6,7,8,17,18,25,26,29,36,38,40,44,],[5,5,10,23,10,10,10,10,23,10,10,10,10,]),'$end':([1,6,9,],[0,-18,-19,]),'SEMICOLON_':([2,3,4,10,11,12,13,14,15,16,19,20,21,22,31,32,35,39,42,45,],[6,-20,-21,-5,-25,-11,-8,-10,-22,-23,-1,-2,-3,-4,-9,-14,-24,-15,-16,-17,]),'EQ':([5,30,],[7,38,]),'LPAR':([5,7,10,13,15,16,17,18,19,20,21,22,25,26,28,31,32,35,36,38,39,40,44,],[8,17,-5,26,-22,-23,17,17,-1,-2,-3,-4,17,17,26,26,-14,-24,17,17,-15,17,17,]),'IF_':([7,17,26,36,38,40,44,],[18,18,18,18,18,18,18,]),'NUMBER':([7,17,18,25,26,36,38,40,44,],[19,19,19,19,19,19,19,19,19,]),'STRING':([7,17,18,25,26,36,38,40,44,],[20,20,20,20,20,20,20,20,20,]),'BOOL':([7,17,18,25,26,36,38,40,44,],[21,21,21,21,21,21,21,21,21,]),'TYPENAME':([7,17,18,25,26,36,38,40,44,],[22,22,22,22,22,22,22,22,22,]),'OP':([10,13,15,16,19,20,21,22,32,35,39,],[-5,25,-22,-23,-1,-2,-3,-4,-14,-24,-15,]),'RPAR':([10,12,13,14,15,16,19,20,21,22,23,24,26,27,31,32,33,34,35,37,39,43,45,],[-5,-11,-8,-10,-22,-23,-1,-2,-3,-4,-6,30,32,35,-9,-14,39,-13,-24,-7,-15,-12,-17,]),'THEN_':([10,15,16,19,20,21,22,28,32,35,39,],[-5,-22,-23,-1,-2,-3,-4,36,-14,-24,-15,]),'COMMA':([10,13,14,15,16,19,20,21,22,23,31,32,34,35,39,45,],[-5,-8,-10,-22,-23,-1,-2,-3,-4,29,-9,-14,40,-24,-15,-17,]),'ELSE_':([10,13,14,15,16,19,20,21,22,31,32,35,39,41,45,],[-5,-8,-10,-22,-23,-1,-2,-3,-4,-9,-14,-24,-15,44,-17,]),}
+_lr_action_items = {'NAME':([0,6,7,8,17,18,26,27,30,37,39,41,45,],[5,5,10,24,10,10,10,10,24,10,10,10,10,]),'$end':([1,6,9,],[0,-19,-20,]),'SEMICOLON_':([2,3,4,10,11,12,13,14,15,16,19,20,21,22,23,32,33,36,40,43,46,],[6,-21,-22,-6,-26,-12,-9,-11,-23,-24,-1,-2,-3,-4,-5,-10,-15,-25,-16,-17,-18,]),'EQUAL_':([5,31,],[7,39,]),'LPAREN_':([5,7,10,13,15,16,17,18,19,20,21,22,23,26,27,29,32,33,36,37,39,40,41,45,],[8,17,-6,27,-23,-24,17,17,-1,-2,-3,-4,-5,17,17,27,27,-15,-25,17,17,-16,17,17,]),'IF_':([7,17,27,37,39,41,45,],[18,18,18,18,18,18,18,]),'NUMBER':([7,17,18,26,27,37,39,41,45,],[19,19,19,19,19,19,19,19,19,]),'STRING':([7,17,18,26,27,37,39,41,45,],[20,20,20,20,20,20,20,20,20,]),'TRUE':([7,17,18,26,27,37,39,41,45,],[21,21,21,21,21,21,21,21,21,]),'FALSE':([7,17,18,26,27,37,39,41,45,],[22,22,22,22,22,22,22,22,22,]),'TYPENAME':([7,17,18,26,27,37,39,41,45,],[23,23,23,23,23,23,23,23,23,]),'OP':([10,13,15,16,19,20,21,22,23,33,36,40,],[-6,26,-23,-24,-1,-2,-3,-4,-5,-15,-25,-16,]),'RPAREN_':([10,12,13,14,15,16,19,20,21,22,23,24,25,27,28,32,33,34,35,36,38,40,44,46,],[-6,-12,-9,-11,-23,-24,-1,-2,-3,-4,-5,-7,31,33,36,-10,-15,40,-13,-25,-8,-16,-14,-18,]),'THEN_':([10,15,16,19,20,21,22,23,29,33,36,40,],[-6,-23,-24,-1,-2,-3,-4,-5,37,-15,-25,-16,]),'COMMA_':([10,13,14,15,16,19,20,21,22,23,24,32,33,35,36,40,46,],[-6,-9,-11,-23,-24,-1,-2,-3,-4,-5,30,-10,-15,41,-25,-16,-18,]),'ELSE_':([10,13,14,15,16,19,20,21,22,23,32,33,36,40,42,46,],[-6,-9,-11,-23,-24,-1,-2,-3,-4,-5,-10,-15,-25,-16,45,-18,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'module':([0,6,],[1,9,]),'statement':([0,6,],[2,2,]),'vardef':([0,6,],[3,3,]),'fundef':([0,6,],[4,4,]),'expr':([7,17,38,],[11,27,42,]),'elem':([7,17,26,36,38,40,44,],[12,12,34,41,12,34,45,]),'value':([7,17,18,25,26,36,38,40,44,],[13,13,28,31,13,13,13,13,13,]),'ifexpr':([7,17,26,36,38,40,44,],[14,14,14,14,14,14,14,]),'atom':([7,17,18,25,26,36,38,40,44,],[15,15,15,15,15,15,15,15,15,]),'fcall':([7,17,18,25,26,36,38,40,44,],[16,16,16,16,16,16,16,16,16,]),'defargs':([8,29,],[24,37,]),'fargs':([26,40,],[33,43,]),}
+_lr_goto_items = {'module':([0,6,],[1,9,]),'statement':([0,6,],[2,2,]),'vardef':([0,6,],[3,3,]),'fundef':([0,6,],[4,4,]),'expr':([7,17,39,],[11,28,43,]),'elem':([7,17,27,37,39,41,45,],[12,12,35,42,12,35,46,]),'value':([7,17,18,26,27,37,39,41,45,],[13,13,29,32,13,13,13,13,13,]),'ifexpr':([7,17,27,37,39,41,45,],[14,14,14,14,14,14,14,]),'atom':([7,17,18,26,27,37,39,41,45,],[15,15,15,15,15,15,15,15,15,]),'fcall':([7,17,18,26,27,37,39,41,45,],[16,16,16,16,16,16,16,16,16,]),'defargs':([8,30,],[25,38,]),'fargs':([27,41,],[34,44,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,20 +29,21 @@ _lr_productions = [
   ("S' -> module","S'",1,None,None,None),
   ('atom -> NUMBER','atom',1,'p_atom_1','ply.py',126),
   ('atom -> STRING','atom',1,'p_atom_2','ply.py',126),
-  ('atom -> BOOL','atom',1,'p_atom_3','ply.py',126),
-  ('atom -> TYPENAME','atom',1,'p_atom_4','ply.py',126),
-  ('atom -> NAME','atom',1,'p_atom_5','ply.py',126),
+  ('atom -> TRUE','atom',1,'p_atom_3','ply.py',126),
+  ('atom -> FALSE','atom',1,'p_atom_4','ply.py',126),
+  ('atom -> TYPENAME','atom',1,'p_atom_5','ply.py',126),
+  ('atom -> NAME','atom',1,'p_atom_6','ply.py',126),
   ('defargs -> NAME','defargs',1,'p_defargs_1','ply.py',126),
-  ('defargs -> NAME COMMA defargs','defargs',3,'p_defargs_2','ply.py',126),
+  ('defargs -> NAME COMMA_ defargs','defargs',3,'p_defargs_2','ply.py',126),
   ('elem -> value','elem',1,'p_elem_1','ply.py',126),
   ('elem -> value OP value','elem',3,'p_elem_2','ply.py',126),
   ('elem -> ifexpr','elem',1,'p_elem_3','ply.py',126),
   ('expr -> elem','expr',1,'p_expr_1','ply.py',126),
-  ('fargs -> elem COMMA fargs','fargs',3,'p_fargs_1','ply.py',126),
-  ('fargs -> elem','fargs',1,'p_fargs_2','ply.py',126),
-  ('fcall -> value LPAR RPAR','fcall',3,'p_fcall_1','ply.py',126),
-  ('fcall -> value LPAR fargs RPAR','fcall',4,'p_fcall_2','ply.py',126),
-  ('fundef -> NAME LPAR defargs RPAR EQ expr','fundef',6,'p_fundef_1','ply.py',126),
+  ('fargs -> elem','fargs',1,'p_fargs_1','ply.py',126),
+  ('fargs -> elem COMMA_ fargs','fargs',3,'p_fargs_2','ply.py',126),
+  ('fcall -> value LPAREN_ RPAREN_','fcall',3,'p_fcall_1','ply.py',126),
+  ('fcall -> value LPAREN_ fargs RPAREN_','fcall',4,'p_fcall_2','ply.py',126),
+  ('fundef -> NAME LPAREN_ defargs RPAREN_ EQUAL_ expr','fundef',6,'p_fundef_1','ply.py',126),
   ('ifexpr -> IF_ value THEN_ elem ELSE_ elem','ifexpr',6,'p_ifexpr_1','ply.py',126),
   ('module -> statement SEMICOLON_','module',2,'p_module_1','ply.py',126),
   ('module -> statement SEMICOLON_ module','module',3,'p_module_2','ply.py',126),
@@ -50,6 +51,6 @@ _lr_productions = [
   ('statement -> fundef','statement',1,'p_statement_2','ply.py',126),
   ('value -> atom','value',1,'p_value_1','ply.py',126),
   ('value -> fcall','value',1,'p_value_2','ply.py',126),
-  ('value -> LPAR expr RPAR','value',3,'p_value_3','ply.py',126),
-  ('vardef -> NAME EQ expr','vardef',3,'p_vardef_1','ply.py',126),
+  ('value -> LPAREN_ expr RPAREN_','value',3,'p_value_3','ply.py',126),
+  ('vardef -> NAME EQUAL_ expr','vardef',3,'p_vardef_1','ply.py',126),
 ]

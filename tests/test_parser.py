@@ -1,5 +1,5 @@
 from cremilda import parse
-from cremilda.ast import Atom, Call, Name
+from cremilda.compiler.ast import Atom, Call, Name
 
 
 class TestSimpleExpressions:

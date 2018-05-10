@@ -1,2 +1,1 @@
-from .lexer import tokenize
-from .parser import parse_tokens, parse
+from .compiler import tokenize, parse, transpile, compile_module

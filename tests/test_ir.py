@@ -1,9 +1,9 @@
 from cremilda import parse
-from cremilda.ir import internal_representation
+from cremilda.compiler.ir import internal_representation
 
 HELLO_MODULE = """
 def _module():
-    from cremilda_runtime import log
+    from cremilda.runtime import log
     msg = log('hello world!')
     return {}
 globals().update(_module())
