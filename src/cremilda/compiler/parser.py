@@ -70,6 +70,7 @@ def make_parser():
         ("atom : TYPENAME", Enum),
         ("atom : NAME", Name),
         ("atom : list", identity),
+        ("atom : tuples", identity),
         # ("atom : record", identity),
 
         # Chamada de função
@@ -109,6 +110,11 @@ def make_parser():
         ("items: elem", lambda x: [x]),
         ("items: elem ',' items", lambda x, z: [x, *z]),
         ("items: elem ',' items ','", lambda x, z: [x, *z]),
+
+        # Tuples
+        ("tuples : '(' ')'", lambda: Expr.Tuple(())),
+        ("tuples : '(' items ')'", lambda x: Expr.Tuple(tuple(x))),
+        # ("items_tuple: elem ',' items_tuple ','", lambda x, z: tuple(x, *z)),
 
         # Records
         # ("record : ...", ...),
