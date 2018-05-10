@@ -126,7 +126,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('main = +2;') == 2.0
         assert self.get_main('main = equal(+2, pos(2));')
 
-    @flag('branca')
+    # @flag('branca')
     def test_support_for_unary_not(self):
         # Equivalente a chamar a função builtin negate
         assert self.get_main('main = not true;') is False
