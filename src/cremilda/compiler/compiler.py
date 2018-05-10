@@ -75,6 +75,7 @@ def compile_module(src, module_name, input_file=None, load=True):
     mod = types.ModuleType(module_name)
 
     # Executa, salvando os resultados no escopo do módulo
+    print(py_src)
     exec(code, mod.__dict__)
 
     # Registra o módulo globalmente

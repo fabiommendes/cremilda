@@ -1,7 +1,7 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda
 from .lexer import tokenize
 
 
@@ -53,7 +53,7 @@ def make_parser():
         ("elem : '-' value", lambda x: Expr.Call(Expr.Name('neg'), [x])),
         ("elem : 'not' value", lambda x: Expr.Call(Expr.Name('negate'), [x])),
         # ("elem : unaryop", identity),
-        # ("elem : lambda", identity),
+        ("elem : LAMBDA '(' defargs ')' OP expr", lambd_def),
         # ("elem : constructor", identity),
 
         # Valores
@@ -130,6 +130,8 @@ def make_parser():
 
 # Expr helpers
 op_call = (lambda x, op, y: BinOp(op, x, y))
+
+lambd_def = (lambda x, args, y, expr: Lambda(args, expr))
 
 
 #

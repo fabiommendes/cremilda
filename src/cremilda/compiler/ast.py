@@ -20,6 +20,7 @@ class Expr(Union):
     List = sk.opt(data=list)
     Name = sk.opt(str)
     Not = sk.opt(this)
+    Lambda= sk.opt(fargs=list, expr=Expr)
     Op = sk.opt(op=str, left=this, right=this)
     Or = sk.opt(left=this, right=this)
     Record = sk.opt(data=list)
@@ -31,7 +32,15 @@ class Expr(Union):
         expressão.
         """
         acc = set() if acc is None else acc
-        return self.visit_nodes(required_symbols_visitor, acc)
+        all_names = self.visit_nodes(required_symbols_visitor, acc)
+        lambda_names = self.lambda_symbols()
+        print(list(lambda_names))
+    
+        return all_names.difference(lambda_names)
+
+    def lambda_symbols(self, acc=None):
+        acc = set() if acc is None else acc
+        return self.visit_nodes(required_lambda_symbols, acc)
 
     
 class Stmt(Union):
@@ -90,6 +99,7 @@ Constructor = Expr.Constructor
 Enum = Expr.Enum
 If = Expr.If
 Let = Expr.Let
+Lambda = Expr.Lambda
 List = Expr.List
 Name = Expr.Name
 Not = Expr.Not
@@ -107,7 +117,6 @@ ImportAll = Stmt.ImportAll
 Opdef = Stmt.Opdef
 Typedef = Stmt.Typedef
 
-
 def required_symbols_visitor(x, acc):
     if isinstance(x, (Name, Classname)):
         acc.add(x.value)
@@ -115,3 +124,9 @@ def required_symbols_visitor(x, acc):
     elif isinstance(x, Let):
         for stmt in x.binds.values():
             stmt.visit_nodes(required_symbols_visitor, acc)
+
+def required_lambda_symbols(x, acc):
+    if isinstance(x, Lambda):
+        for arg in x.fargs:
+            acc.add(arg)
+        return False
