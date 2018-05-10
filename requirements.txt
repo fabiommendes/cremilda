@@ -1,2 +1,2 @@
--e .[dev]
 -e .[doc]
+-e .[dev]
