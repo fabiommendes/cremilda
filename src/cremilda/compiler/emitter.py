@@ -44,6 +44,10 @@ class to_python_expr:  # noqa: N801
     def List(values):
         return as_expr([to_python(x) for x in values])
 
+    def Tuple(values):
+        return as_expr(tuple(to_python(x) for x in values))
+
+
 
 @sk.casedispatch.from_namespace(Stmt)
 class to_python_stmt:  # noqa: N801

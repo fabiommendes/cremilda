@@ -39,7 +39,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('main = [1, 2, 3];') == [1, 2, 3]
         assert self.get_main('main = [1, 2, add(1, 2)];') == [1, 2, 3]
 
-    @flag('amarela')
+    # @flag('amarela')
     def test_support_for_tuple_literals(self):
         assert self.get_main('main = (1, 2, 3);') == (1, 2, 3)
         assert self.get_main('main = (1, 2, add(1, 2));') == (1, 2, 3)
