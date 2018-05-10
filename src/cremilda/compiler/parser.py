@@ -66,7 +66,7 @@ def make_parser():
         ("atom : FALSE", lambda x: Atom(False)),
         ("atom : TYPENAME", Enum),
         ("atom : NAME", Name),
-        # ("atom : list", identity),
+        ("atom : list", identity),
         # ("atom : record", identity),
 
         # Chamada de função
@@ -96,7 +96,12 @@ def make_parser():
         # ("caseexpr : ...", ...),
 
         # Listas
-        # ("list : ...", ...),
+        ("list : '[' ']'", lambda: Expr.List([])),
+        ("list : '[' items ']'", lambda x: Expr.List(x)),
+
+        ("items: elem", lambda x: [x]),
+        ("items: elem ',' items", lambda x, z: [x, *z]),
+        ("items: elem ',' items ','", lambda x, z: [x, *z]),
 
         # Records
         # ("record : ...", ...),
