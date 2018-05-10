@@ -34,7 +34,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('main = "hello";') == 'hello'
 
     # Estruturas de dados e valores
-    #@flag('amarela')
+    # @flag('amarela')
     def test_support_for_list_literals(self):
         assert self.get_main('main = [1, 2, 3];') == [1, 2, 3]
         assert self.get_main('main = [1, 2, add(1, 2)];') == [1, 2, 3]
