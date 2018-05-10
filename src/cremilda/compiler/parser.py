@@ -108,9 +108,9 @@ def make_parser():
 
         # Records
         # ("record : ...", ...),
-        ("record : '{' objvalue '}'", lambda y : Expr.Record(y)),
-        ("objvalue : NAME ':' elem", lambda x, z : {x:z}),
-        ("objvalue : NAME ':' elem ',' objvalue", lambda k, y, z : {k: y, **z}),
+        ("record : '{' objvalue '}'", lambda y: Expr.Record(y)),
+        ("objvalue : NAME ':' elem", lambda x, z: {x: z}),
+        ("objvalue : NAME ':' elem ',' objvalue", lambda k, y, z: {k: y, **z}),
 
         # Construtor
         # ("constructor : ...", ...),
