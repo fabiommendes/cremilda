@@ -22,7 +22,7 @@ class Expr(Union):
     Not = sk.opt(this)
     Op = sk.opt(op=str, left=this, right=this)
     Or = sk.opt(left=this, right=this)
-    Record = sk.opt(data=list)
+    Record = sk.opt(data=dict)
     Tuple = sk.opt(data=tuple)
 
     def required_symbols(self, acc=None):
