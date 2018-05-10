@@ -14,9 +14,9 @@ def safecall(func, *args):
 def ismatch(type, value):
     return isinstance(value, type)
 
+
 def iscase(type, value):
     return type is value or isinstance(value, type)
-
 
 
 @singledispatch

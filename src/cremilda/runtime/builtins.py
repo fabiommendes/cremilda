@@ -4,8 +4,13 @@ Funções builtins estão disponíveis publicamente como funções Cremilda.
 import operator as __op
 
 from . import helpers as __helpers
-from .base import Operator as _operator, Assoc as __assoc
-from .types import *
+from .base import Operator as _operator, Assoc as __assoc  # noqa: N813
+from .types import (
+    Float, Bool, String, Tuple, Record,
+    Maybe, Just, Nothing,
+    Result, Ok, Err,
+    List, Cons, Nil
+)
 
 # ==============================================================================
 # Helpers
@@ -22,6 +27,12 @@ __multimethod = __helpers.multimethod
 __typed_arg = __helpers.typed_arg
 __left_op = (lambda prec, op, func: _operator(op, func, __assoc.LEFT, prec))
 __right_op = (lambda prec, op, func: _operator(op, func, __assoc.RIGHT, prec))
+__default_types = (
+    Float, Bool, String, Tuple, Record,
+    Maybe, Just, Nothing,
+    Result, Ok, Err,
+    List, Cons, Nil
+)
 __default_operators = {}
 
 # ==============================================================================

@@ -31,15 +31,7 @@ class Expr(Union):
         expressão.
         """
         acc = set() if acc is None else acc
-
-        def visitor(x, acc):
-            if isinstance(x, (Name, Classname)):
-                acc.add(x.value)
-            elif isinstance(x, Let):
-                for stmt in x.binds.values():
-                    stmt.visit_nodes(visitor, acc)
-
-        return self.visit_nodes(visitor, acc)
+        return self.visit_nodes(required_symbols_visitor, acc)
 
 
 class Stmt(Union):
@@ -87,3 +79,12 @@ Import = Stmt.Import
 ImportAll = Stmt.ImportAll
 Opdef = Stmt.Opdef
 Typedef = Stmt.Typedef
+
+
+def required_symbols_visitor(x, acc):
+    if isinstance(x, (Name, Classname)):
+        acc.add(x.value)
+        return False
+    elif isinstance(x, Let):
+        for stmt in x.binds.values():
+            stmt.visit_nodes(required_symbols_visitor, acc)
