@@ -1,6 +1,7 @@
 import sidekick as sk
 from ox.backend import python as py
 from ox.backend.python import as_expr, var, let, function, return_
+from ox.backend.python.helpers import lambd
 
 from .ast import Expr, Stmt
 
@@ -33,6 +34,11 @@ class to_python_expr:  # noqa: N801
         args = map(to_python_expr, fargs)
         func = to_python_expr(func)
         return func(*args)
+
+    def Lambda(fargs, expr):
+        args = map(var, fargs)
+        expr = to_python_expr(expr)
+        return lambd(*args)[expr]
 
     def If(cond, then, other):  # noqa: N802, N805
         cond, then, other = map(to_python_expr, [cond, then, other])

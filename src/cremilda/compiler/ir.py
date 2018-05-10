@@ -113,6 +113,9 @@ class Module:
         """
         acc = set()
         for store in (self.functions, self.constants):
+            print("--------------------------------")
+            print(store.values())
+            
             for expr in store.values():
                 expr.required_symbols(acc)
 

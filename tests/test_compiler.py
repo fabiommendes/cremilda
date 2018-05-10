@@ -60,7 +60,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('main = Just 42;') == Just(42)
         assert self.get_main('main = Nothing;') == Nothing
 
-    @flag('vermelha')
+    #@flag('vermelha')
     def test_support_for_lambdas(self):
         # Nota: não existem funções de zero argumentos!
         func = self.get_main('main = fn (x) => add(x, x);')
