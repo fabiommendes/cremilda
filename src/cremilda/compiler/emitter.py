@@ -40,6 +40,9 @@ class to_python_expr:  # noqa: N801
 
     def else_(expr):  # noqa: N802, N805
         raise NotImplementedError(expr)
+    
+    def List(values):
+        return as_expr([to_python(x) for x in values])
 
 
 @sk.casedispatch.from_namespace(Stmt)
