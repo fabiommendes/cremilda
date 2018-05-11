@@ -152,13 +152,16 @@ def debug(name, value):
 # Funções associadas a operadores
 # ==============================================================================
 
+# generaliza operatores para testes em python
+opp = lambda op: (lambda a, b: op(float(a), float(b)))
+
 # Aritiméticas
-add = float.__add__
-mul = float.__mul__
-sub = float.__sub__
-div = float.__truediv__
-mod = float.__mod__
-pow = float.__pow__
+add = opp(float.__add__)
+mul = opp(float.__mul__)
+sub = opp(float.__sub__)
+div = opp(float.__truediv__)
+mod = opp(float.__mod__)
+pow = opp(float.__pow__)
 
 # Comparações
 equal = __op.eq
