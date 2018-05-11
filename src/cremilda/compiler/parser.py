@@ -46,11 +46,11 @@ def make_parser():
         # ("expr : caseexpr", identity),
 
         # Elementos
+        ("elem : lambda", identity),
         ("elem : value", identity),
         ("elem : value OP value", op_call),
         ("elem : ifexpr", identity),
         # ("elem : unaryop", identity),
-        ("elem : LAMBDA '(' defargs ')' OP expr", lambd_def),
         # ("elem : constructor", identity),
 
         # Valores
@@ -84,7 +84,7 @@ def make_parser():
         # ("unary : ...", ...),
 
         # Lambdas
-        # ("lambda : ...", ...),
+        ("lambda : 'fn' '(' defargs ')' '=>' expr", lambd_def),
 
         # If
         ("ifexpr : 'if' value 'then' elem 'else' elem", Expr.If),
@@ -112,9 +112,7 @@ def make_parser():
 
 # Expr helpers
 op_call = (lambda x, op, y: BinOp(op, x, y))
-
-lambd_def = (lambda x, args, y, expr: Lambda(args, expr))
-
+lambd_def = (lambda args, expr: Lambda(args, expr))
 
 #
 # Cria parser

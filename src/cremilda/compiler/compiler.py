@@ -71,11 +71,12 @@ def compile_module(src, module_name, input_file=None, load=True):
     py_src = transpile(src)
     code = compile(py_src, input_file, 'exec')
 
+    print(py_src)
+
     # Cria módulo
     mod = types.ModuleType(module_name)
 
     # Executa, salvando os resultados no escopo do módulo
-    print(py_src)
     exec(code, mod.__dict__)
 
     # Registra o módulo globalmente
