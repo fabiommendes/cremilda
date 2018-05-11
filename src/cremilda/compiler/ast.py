@@ -114,6 +114,7 @@ ImportAll = Stmt.ImportAll
 Opdef = Stmt.Opdef
 Typedef = Stmt.Typedef
 
+
 def required_symbols_visitor(x, acc):
     if isinstance(x, (Name, Classname)):
         acc.add(x.value)

@@ -153,7 +153,9 @@ def debug(name, value):
 # ==============================================================================
 
 # generaliza operatores para testes em python
-opp = lambda op: (lambda a, b: op(float(a), float(b)))
+def opp(op):
+    return lambda a, b: op(float(a), float(b))
+
 
 # Aritiméticas
 add = opp(float.__add__)
