@@ -1,8 +1,9 @@
 from ox.backend.python import block, let, var, return_, function, import_from
 from ox.backend.python.ast_statement import as_stmt
 
-from .ast import Fundef, Assign, Name
+from .ast import Fundef, Assign, Typedef, Name
 from .emitter import to_python
+from .semantic_analysis import SemanticAnalysis, SemanticError
 
 
 def internal_representation(statements):
@@ -12,16 +13,36 @@ def internal_representation(statements):
 
     functions = {}
     constants = {}
+    imports = {}
+    operators = {}
+    typedefs = {}
+    exports = {}
+    symbols = []
 
     for stmt in statements:
         if isinstance(stmt, Fundef):
             functions[stmt.name] = stmt
+            symbols.append(stmt.name)
+
         elif isinstance(stmt, Assign):
             constants[stmt.name] = stmt.expr
+            symbols.append(stmt.name)
+        
+        elif isinstance(stmt, Typedef):
+            ...
+
         else:
             raise NotImplementedError('unknown statement: %s' % stmt)
 
-    return Module(functions=functions, constants=constants)
+    return Module(
+        exposing=exports, 
+        imports=imports, 
+        typedefs=typedefs,
+        operators=operators, 
+        functions=functions, 
+        constants=constants,
+        symbols=symbols,
+    )
 
 
 class Module:
@@ -38,13 +59,14 @@ class Module:
     """
 
     def __init__(self, exposing=None, imports=None, typedefs=None,
-                 operators=None, functions=None, constants=None):
-        self.exposing = set(exposing or ())
-        self.imports = dict(imports or ())
-        self.typedefs = dict(typedefs or ())
-        self.operators = dict(operators or ())
-        self.functions = dict(functions or ())
-        self.constants = dict(constants or ())
+                 operators=None, functions=None, constants=None, symbols=None):
+        self.exposing = set(exposing or {})
+        self.imports = dict(imports or {})
+        self.typedefs = dict(typedefs or {})
+        self.operators = dict(operators or {})
+        self.functions = dict(functions or {})
+        self.constants = dict(constants or {})
+        self.symbols = list(symbols or [])
 
     #
     # Transformações do código
@@ -56,6 +78,8 @@ class Module:
         Levanta SyntaxError caso alguma inconsistência seja encontrada no
         código.
         """
+        analysis = SemanticAnalysis(self)
+        analysis.run()
 
     def transform_ir(self):
         """
