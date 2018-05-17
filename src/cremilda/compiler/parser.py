@@ -102,6 +102,10 @@ def make_parser():
         ("list : '[' ']'", lambda: Expr.List([])),
         ("list : '[' items ']'", lambda x: Expr.List(x)),
 
+        ("tuple : '(' ')'", lambda: Expr.Tuple([])),
+        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x)),
+
+
         ("items: elem", lambda x: [x]),
         ("items: elem ',' items", lambda x, z: [x, *z]),
         ("items: elem ',' items ','", lambda x, z: [x, *z]),
