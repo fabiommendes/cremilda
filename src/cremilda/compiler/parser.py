@@ -20,7 +20,7 @@ def make_parser():
         # ("statement : typedef", identity),
         # ("statement : opdef", identity),
         # ("statement : export", identity),
-        # ("statement : import", identity),
+        ("statement : import", identity),
 
         # Definição de tipos
         # ("typedef : ...", ...),
@@ -32,7 +32,7 @@ def make_parser():
         # ("export : ...", ...),
 
         # Imports
-        # ("import : ...", ...),
+        ("import : 'import' '(' NAME ')' 'from' STRING", lambda x, y: Stmt.Import(y[1:-1], {x: x})),
 
         # Declaração de funções e variáveis
         ("vardef  : NAME '=' expr", Stmt.Assign),
@@ -103,7 +103,7 @@ def make_parser():
         ("list : '[' items ']'", lambda x: Expr.List(x)),
 
         ("tuple : '(' ')'", lambda: Expr.Tuple([])),
-        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x)),
+        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x))),
 
 
         ("items: elem", lambda x: [x]),

@@ -75,7 +75,6 @@ class Stmt(Union):
             acc.update(self.names)
         elif self.is_opdef:
             acc.add(self.function)
-
         return acc
 
 

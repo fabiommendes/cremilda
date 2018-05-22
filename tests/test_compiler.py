@@ -220,7 +220,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('import "math" as math; '
                              'main = math.sqrt(4);') == 2
 
-    @flag('amarela')
+    #@flag('amarela')
     def test_support_for_explicitly_imported_names(self):
         # Sem suporte para aliasing
         assert self.get_main('import (sqrt) from "math"; '
