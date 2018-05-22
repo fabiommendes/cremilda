@@ -3,7 +3,7 @@ from ox.backend.python.ast_statement import as_stmt
 
 from .ast import Fundef, Assign, Typedef, Name, Import
 from .emitter import to_python
-from .semantic_analysis import SemanticAnalysis, SemanticError
+from .semantic_analysis import SemanticAnalysis
 
 
 def internal_representation(statements):
@@ -30,7 +30,7 @@ def internal_representation(statements):
 
         elif isinstance(stmt, Import):
             imports[stmt.module] = stmt
-        
+
         elif isinstance(stmt, Typedef):
             ...
 
@@ -38,11 +38,11 @@ def internal_representation(statements):
             raise NotImplementedError('unknown statement: %s' % stmt)
 
     return Module(
-        exposing=exports, 
-        imports=imports, 
+        exposing=exports,
+        imports=imports,
         typedefs=typedefs,
-        operators=operators, 
-        functions=functions, 
+        operators=operators,
+        functions=functions,
         constants=constants,
         symbols=symbols,
     )
