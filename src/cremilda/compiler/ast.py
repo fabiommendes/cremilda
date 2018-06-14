@@ -39,18 +39,18 @@ class Expr(Union):
             self.visit_nodes(required_symbols_visitor, acc)
         return acc
 
-    
+
 class Stmt(Union):
     Assign = sk.opt(name=str, expr=Expr)
-    
+
     # names : lista de strings com os símbolos exportados
     Export = sk.opt(names=list)
-    
+
     # name  :  nome da função
     # farsg : lista de strings com o nome de cada argumento
     # expr  : corpo da função
     Fundef = sk.opt(name=str, fargs=list, expr=Expr)
-    
+
     # module : nome do módulo
     # names  : dicionário de nome original para alias de todos
     #          valores importados
@@ -62,17 +62,17 @@ class Stmt(Union):
     # symbol     : símbolo do operador (ex: '+')
     # function   : nome da função responsável por implementar o operador
     # assoc      : associatividade (esquerda ou direita)
-    # precedence : nível de precedência do operador 
+    # precedence : nível de precedência do operador
     Opdef = sk.opt(symbol=str, function=str, assoc=Assoc, precedence=int)
-    
-    # name    : nome do tipo 
+
+    # name    : nome do tipo
     # options : mapa com o nome de cada opção associada às variáveis
     #           exigidas pelo construtor
     Typedef = sk.opt(name=str, options=dict)
 
     def required_symbols(self, acc=None):
         acc = set() if acc is None else acc
-        
+
         if self.is_assign:
             self.expr.required_symbols(acc)
         elif self.is_fundef:
@@ -81,7 +81,6 @@ class Stmt(Union):
             acc.update(self.names)
         elif self.is_opdef:
             acc.add(self.function)
-
         return acc
 
 

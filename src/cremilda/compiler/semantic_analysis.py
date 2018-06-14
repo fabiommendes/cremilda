@@ -1,4 +1,3 @@
-from itertools import chain
 from collections import Counter
 
 
@@ -18,7 +17,7 @@ class SemanticAnalysis:
 
     def find_repeated_symbols(self):
         """
-        Encontra todos os símbolos repetidos em imports, definições 
+        Encontra todos os símbolos repetidos em imports, definições
         de variáveis e funções.
         """
         counter = Counter(self.ir.symbols)
@@ -28,7 +27,7 @@ class SemanticAnalysis:
         """
         Realiza todas as verificações da análise semântica.
         """
-        
+
         # Verifica se não existem símbolos repetidos
         repeated = self.find_repeated_symbols()
         if repeated:

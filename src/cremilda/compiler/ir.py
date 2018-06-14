@@ -1,9 +1,9 @@
 from ox.backend.python import block, let, var, return_, function, import_from
 from ox.backend.python.ast_statement import as_stmt
 
-from .ast import Fundef, Assign, Typedef, Name
+from .ast import Fundef, Assign, Typedef, Name, Import
 from .emitter import to_python
-from .semantic_analysis import SemanticAnalysis, SemanticError
+from .semantic_analysis import SemanticAnalysis
 
 
 def internal_representation(statements):
@@ -27,7 +27,10 @@ def internal_representation(statements):
         elif isinstance(stmt, Assign):
             constants[stmt.name] = stmt.expr
             symbols.append(stmt.name)
-        
+
+        elif isinstance(stmt, Import):
+            imports[stmt.module] = stmt
+
         elif isinstance(stmt, Typedef):
             ...
 
@@ -35,11 +38,11 @@ def internal_representation(statements):
             raise NotImplementedError('unknown statement: %s' % stmt)
 
     return Module(
-        exposing=exports, 
-        imports=imports, 
+        exposing=exports,
+        imports=imports,
         typedefs=typedefs,
-        operators=operators, 
-        functions=functions, 
+        operators=operators,
+        functions=functions,
         constants=constants,
         symbols=symbols,
     )
@@ -129,14 +132,19 @@ class Module:
         """
         Retorna conjunto de variáveis utilizadas internamente.
         """
-        return {*self.functions, *self.constants, *self.typedefs, *self.imports}
+        list_imports = []
+        for module, import_node in self.imports.items():
+            list_imports.append(module)
+            for k, v in import_node.names.items():
+                list_imports.append(v)
+        return {*self.functions, *self.constants, *self.typedefs, *list_imports}
 
     def get_default_imports(self):
         """
         Retorna a lista de funções do módulo runtime que deve ser importada.
         """
         acc = set()
-        for store in (self.functions, self.constants):
+        for store in (self.functions, self.constants, self.imports):
             for expr in store.values():
                 expr.required_symbols(acc)
 
@@ -169,7 +177,10 @@ def to_python_imports(imports):
     """
     Converte os imports para comandos de importação no Python.
     """
-    return []
+    py_imports = []
+    for name, imp in imports.items():
+        py_imports.append(to_python(imp))
+    return py_imports
 
 
 def to_python_typedefs(typedefs):

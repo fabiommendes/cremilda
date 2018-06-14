@@ -1,8 +1,8 @@
 import sidekick as sk
 from ox.backend import python as py
 from ox.backend.python import as_expr, var, let, function, return_
+from ox.backend.python.helpers import import_from , lambd
 from ox.backend.python.helpers import lambd
-
 from .ast import Expr, Stmt
 
 
@@ -73,6 +73,9 @@ class to_python_stmt:  # noqa: N801
         fargs = map(to_python_expr, fargs)
         expr = to_python_expr(expr)
         return function[name](*fargs)[return_(expr)]
+
+    def Import(module, names):
+        return import_from(module, names)
 
     def else_(expr):  # noqa: N802, N805
         raise NotImplementedError(expr)

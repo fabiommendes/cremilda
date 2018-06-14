@@ -1,8 +1,9 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Tuple, List, Lambda
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda
 from .lexer import tokenize
+
 
 #
 # Gramática
@@ -35,7 +36,7 @@ def make_parser():
         # ("export : ...", ...),
 
         # Imports
-        # ("import : ...", ...),
+        ("import : 'import' '(' NAME ')' 'from' STRING", lambda x, y: Stmt.Import(y[1:-1], {x: x})),
 
         # Declaração de funções e variáveis
         ("vardef  : NAME '=' expr", Stmt.Assign),
@@ -107,13 +108,13 @@ def make_parser():
         ("list : '[' ']'", lambda: Expr.List([])),
         ("list : '[' items ']'", lambda x: Expr.List(x)),
 
+        ("tuple : '(' ')'", lambda: Expr.Tuple([])),
+        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x)),
+
+
         ("items: elem", lambda x: [x]),
         ("items: elem ',' items", lambda x, z: [x, *z]),
         ("items: elem ',' items ','", lambda x, z: [x, *z]),
-
-        # Tuples
-        ("tuples : '(' ')'", lambda: Expr.Tuple(())),
-        ("tuples : '(' elem ',' items ')'", lambda x, xs: Expr.Tuple((x, *xs))),
 
         # Records
         ("record : '{' objvalue '}'", lambda y: Expr.Record(y)),
