@@ -12,6 +12,26 @@ from .types import (
     List, Cons, Nil
 )
 
+def __create_type(name, cases):
+    import sidekick as sk
+    
+    namespace = {}
+    for casename, typename in cases:
+        if typename is None:
+            namespace[casename] = sk.opt()
+        else:
+            typevalue = type_from_name(typename)
+            namespace[casename] = sk.opt(typevalue)
+
+    return type(name, (sk.Union,), namespace)
+
+
+def type_from_name(typename):
+    typemap = {'Any': object, 'String': str, 'Number': float}
+    return typemap[typename]
+
+
+
 # ==============================================================================
 # Helpers
 # ==============================================================================

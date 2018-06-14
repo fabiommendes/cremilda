@@ -1,7 +1,7 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt
 from .lexer import tokenize
 
 
@@ -17,14 +17,18 @@ def make_parser():
         # Declarações
         ("statement : vardef", identity),
         ("statement : fundef", identity),
-        # ("statement : typedef", identity),
+        ("statement : typedef", identity),
         # ("statement : opdef", identity),
         # ("statement : export", identity),
         # ("statement : import", identity),
 
         # Definição de tipos
-        # ("typedef : ...", ...),
-
+        ("typedef : 'type' TYPENAME '=' casedeflist", handle_type),
+        ("casedeflist : casedef", singleton),
+        ("casedeflist : casedef '|' casedeflist", cons),
+        ("casedef : TYPENAME TYPENAME", lambda x, y: (x, y)),
+        ("casedef : TYPENAME", lambda x: (x, None)),
+        
         # Definição de operadores
         # ("opdef : ...", ...),
 
@@ -67,10 +71,10 @@ def make_parser():
         ("atom : STRING", lambda x: Atom(x[1:-1])),
         ("atom : TRUE", lambda x: Atom(True)),
         ("atom : FALSE", lambda x: Atom(False)),
-        ("atom : TYPENAME", Enum),
+        ("atom : TYPENAME", Name),
+        ("atom : TYPENAME atom", handle_type_creation),
         ("atom : NAME", Name),
         ("atom : list", identity),
-        ("atom : tuples", identity),
         # ("atom : record", identity),
 
         # Chamada de função
@@ -88,7 +92,7 @@ def make_parser():
         # ("unary : ...", ...),
 
         # Lambdas
-        ("lambda : 'fn' '(' defargs ')' '=>' expr", lambd_def),
+        # ("lambda : ...", ...),
 
         # If
         ("ifexpr : 'if' value 'then' elem 'else' elem", Expr.If),
@@ -111,11 +115,6 @@ def make_parser():
         ("items: elem ',' items", lambda x, z: [x, *z]),
         ("items: elem ',' items ','", lambda x, z: [x, *z]),
 
-        # Tuples
-        ("tuples : '(' ')'", lambda: Expr.Tuple(())),
-        ("tuples : '(' items ')'", lambda x: Expr.Tuple(tuple(x))),
-        # ("items_tuple: elem ',' items_tuple ','", lambda x, z: tuple(x, *z)),
-
         # Records
         # ("record : ...", ...),
 
@@ -131,6 +130,15 @@ def make_parser():
 # Expr helpers
 op_call = (lambda x, op, y: BinOp(op, x, y))
 lambd_def = (lambda args, expr: Lambda(args, expr))
+
+
+def handle_type(name, definitions):
+    deflist = List([List([Atom(x), Atom(y)]) for x, y in definitions])
+    return Stmt.Assign(name, Call(Name('__create_type'), [Atom(name), deflist]))    
+
+
+def handle_type_creation(name, expr):
+    return Call(Name(name), [expr])
 
 
 #

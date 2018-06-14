@@ -17,7 +17,7 @@ class Lexer(ox.Lexer):
     TYPENAME = r'[A-Z][a-zA-Z0-9]*'
     OP = (r'[.=:][-+*/<>?@&$^~%=:]+'
           r'|[-+*/<>?@&$^~%][-+*/<>?@&$^~%=:]*')
-    CONTROL = r'[[\](){},;:=]'
+    CONTROL = r'[[\](){},;:=|]'
 
     # Palavras reservadas
     r_TRUE = r'true'
@@ -25,6 +25,7 @@ class Lexer(ox.Lexer):
     r_IF = r'if'
     r_THEN = r'then'
     r_ELSE = r'else'
+    r_TYPE = r'type'
 
 
 #
