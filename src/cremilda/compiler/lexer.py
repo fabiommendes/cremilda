@@ -25,6 +25,7 @@ class Lexer(ox.Lexer):
     r_THEN = r'then'
     r_ELSE = r'else'
     r_IMPORT = r'import'
+    r_AS = r'as'
     r_FROM = r'from'
 
 
