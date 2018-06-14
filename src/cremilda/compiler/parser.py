@@ -1,9 +1,8 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Tuple, List
 from .lexer import tokenize
-
 
 #
 # Gramática
