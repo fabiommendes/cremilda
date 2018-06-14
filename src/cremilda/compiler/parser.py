@@ -1,9 +1,10 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda, Constructor
 from .lexer import tokenize
 
+from cremilda.runtime import Nothing
 
 #
 # Gramática
@@ -53,6 +54,8 @@ def make_parser():
         ("elem : '+' value", lambda x: Expr.Call(Expr.Name('pos'), [x])),
         ("elem : '-' value", lambda x: Expr.Call(Expr.Name('neg'), [x])),
         ("elem : 'not' value", lambda x: Expr.Call(Expr.Name('negate'), [x])),
+        ("elem : JUST value", lambda x, y: Expr.Call(Expr.Name(str(x)), [y])),
+        ("elem : NOTHING", lambda x: Expr.Name(str(x))),
         # ("elem : unaryop", identity),
         # ("elem : constructor", identity),
 
@@ -104,7 +107,7 @@ def make_parser():
         ("list : '[' items ']'", lambda x: Expr.List(x)),
 
         ("tuple : '(' ')'", lambda: Expr.Tuple([])),
-        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x)),
+        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x))),
 
 
         ("items: elem", lambda x: [x]),

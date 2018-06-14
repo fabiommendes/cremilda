@@ -26,6 +26,9 @@ class Lexer(ox.Lexer):
     r_THEN = r'then'
     r_ELSE = r'else'
 
+    r_JUST = r'Just'
+    r_NOTHING = r'Nothing'
+
 
 #
 # Funções públicas
