@@ -1,7 +1,7 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda
+from .ast import BinOp, Call, Atom, Name, Expr, Stmt, Lambda
 from .lexer import tokenize
 
 
@@ -28,7 +28,7 @@ def make_parser():
         ("casedeflist : casedef '|' casedeflist", cons),
         ("casedef : TYPENAME TYPENAME", lambda x, y: (x, y)),
         ("casedef : TYPENAME", lambda x: (x, None)),
-        
+
         # Definição de operadores
         # ("opdef : ...", ...),
 
@@ -136,11 +136,12 @@ lambd_def = (lambda args, expr: Lambda(args, expr))
 
 def handle_type(name, definitions):
     deflist = List([List([Atom(x), Atom(y)]) for x, y in definitions])
-    return Stmt.Assign(name, Call(Name('__create_type'), [Atom(name), deflist]))    
+    return Stmt.Assign(name, Call(Name('__create_type'), [Atom(name), deflist]))
 
 
 def handle_type_creation(name, expr):
     return Call(Name(name), [expr])
+
 
 def handle_list_imports_module(list_imports, module):
     if isinstance(list_imports, str):
