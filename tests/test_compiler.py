@@ -34,17 +34,14 @@ class TestCompilationToPythonModule:
         assert self.get_main('main = "hello";') == 'hello'
 
     # Estruturas de dados e valores
-    # @flag('amarela')
     def test_support_for_list_literals(self):
         assert self.get_main('main = [1, 2, 3];') == [1, 2, 3]
         assert self.get_main('main = [1, 2, add(1, 2)];') == [1, 2, 3]
 
-    # @flag('amarela')
     def test_support_for_tuple_literals(self):
         assert self.get_main('main = (1, 2, 3);') == (1, 2, 3)
         assert self.get_main('main = (1, 2, add(1, 2));') == (1, 2, 3)
 
-    @flag('amarela')
     def test_support_for_record_literals(self):
         assert self.get_main('main = {foo: "bar"};') == {'foo': 'bar'}
         assert self.get_main('main = {foo: add(1, 2)};') == {'foo': 3}
@@ -60,7 +57,6 @@ class TestCompilationToPythonModule:
         assert self.get_main('main = Just 42;') == Just(42)
         assert self.get_main('main = Nothing;') == Nothing
 
-    #@flag('vermelha')
     def test_support_for_lambdas(self):
         # Nota: não existem funções de zero argumentos!
         func = self.get_main('main = fn (x) => add(x, x);')
@@ -114,19 +110,16 @@ class TestCompilationToPythonModule:
             ''') == 43
 
     # Operadores
-    # @flag('branca')
     def test_support_for_unary_minus(self):
         # Equivalente a chamar a função builtin neg
         assert self.get_main('main = -2;') == -2.0
         assert self.get_main('main = equal(-2, neg(2));')
 
-    # @flag('branca')
     def test_support_for_unary_plus(self):
         # Equivalente a chamar a função builtin pos
         assert self.get_main('main = +2;') == 2.0
         assert self.get_main('main = equal(+2, pos(2));')
 
-    # @flag('branca')
     def test_support_for_unary_not(self):
         # Equivalente a chamar a função builtin negate
         assert self.get_main('main = not true;') is False
@@ -220,7 +213,6 @@ class TestCompilationToPythonModule:
         assert self.get_main('import "math" as math; '
                              'main = math.sqrt(4);') == 2
 
-    @flag('amarela')
     def test_support_for_explicitly_imported_names(self):
         # Sem suporte para aliasing
         assert self.get_main('import (sqrt) from "math"; '

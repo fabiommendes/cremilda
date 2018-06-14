@@ -9,3 +9,4 @@ __pycache__/
 .tox/
 pasetab.py
 parser.out
+parsetab.py

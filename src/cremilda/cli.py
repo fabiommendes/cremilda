@@ -6,6 +6,7 @@ import click
 from .compiler import transpile, compile_module
 from .compiler import SemanticError
 
+
 # Usamos a biblioteca click: http://click.pocoo.org/
 @click.command(name='cremilda')
 @click.argument('arquivo', type=click.Path('r'))
