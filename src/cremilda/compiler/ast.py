@@ -54,7 +54,7 @@ class Stmt(Union):
     # module : nome do módulo
     # names  : dicionário de nome original para alias de todos
     #          valores importados
-    Import = sk.opt(module=str, names=dict)
+    Import = sk.opt(module=str, names=list)
 
     # module : nome do módulo
     ImportAll = sk.opt(module=str)

@@ -36,7 +36,11 @@ def make_parser():
         # ("export : ...", ...),
 
         # Imports
-        ("import : 'import' '(' NAME ')' 'from' STRING", lambda x, y: Stmt.Import(y[1:-1], {x: x})),
+        ("import : 'import' '(' list_names ')' 'from' STRING", handle_list_imports_module),
+        ("list_names : NAME ',' list_names", lambda x, xs: [x, *xs]),
+        ("list_names : NAME 'as' NAME ',' list_names", lambda x, name, xs: [{x: name}, *xs]),
+        ("list_names : NAME 'as' NAME", lambda x, name: [{x: name}]),
+        ("list_names : NAME", identity),
 
         # Declaração de funções e variáveis
         ("vardef  : NAME '=' expr", Stmt.Assign),
@@ -137,6 +141,12 @@ def handle_type(name, definitions):
 
 def handle_type_creation(name, expr):
     return Call(Name(name), [expr])
+
+def handle_list_imports_module(list_imports, module):
+    if isinstance(list_imports, str):
+        return Stmt.Import(module[1:-1], [list_imports])
+    elif isinstance(list_imports, list):
+        return Stmt.Import(module[1:-1], [*list_imports])
 
 
 #

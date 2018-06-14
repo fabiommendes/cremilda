@@ -1,5 +1,6 @@
 import pytest
 
+from math import pi, sin
 import sidekick as sk
 from cremilda.compiler import transpile, compile_module
 from cremilda.compiler.ast import Assoc
@@ -218,10 +219,10 @@ class TestCompilationToPythonModule:
         assert self.get_main('import (sqrt) from "math"; '
                              'main = sqrt(4);') == 2
 
-    @flag('amarela')
+    #@flag('amarela')
     def test_support_for_explicitly_imported_names_with_aliases(self):
         assert self.get_main('import (pi, sin as seno) from "math"; '
-                             'main = sen(pi);') == 0.0
+                             'main = seno(pi);') == sin(pi)
 
     # Typedefs
     @flag('vermelha')
