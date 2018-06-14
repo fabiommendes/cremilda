@@ -75,7 +75,8 @@ def make_parser():
         ("atom : TYPENAME atom", handle_type_creation),
         ("atom : NAME", Name),
         ("atom : list", identity),
-        # ("atom : record", identity),
+        ("atom : record", identity),
+        ("atom : tuples", identity),
 
         # Chamada de função
         ("fcall : value '(' ')'", lambda x: Call(x, [])),
@@ -115,8 +116,16 @@ def make_parser():
         ("items: elem ',' items", lambda x, z: [x, *z]),
         ("items: elem ',' items ','", lambda x, z: [x, *z]),
 
+        # Tuples
+        ("tuples : '(' ')'", lambda: Expr.Tuple(())),
+        ("tuples : '(' items ')'", lambda x: Expr.Tuple(tuple(x))),
+        # ("items_tuple: elem ',' items_tuple ','", lambda x, z: tuple(x, *z)),
+
         # Records
         # ("record : ...", ...),
+        ("record : '{' objvalue '}'", lambda y: Expr.Record(y)),
+        ("objvalue : NAME ':' elem", lambda x, z: {x: z}),
+        ("objvalue : NAME ':' elem ',' objvalue", lambda k, y, z: {k: y, **z}),
 
         # Construtor
         # ("constructor : ...", ...),
