@@ -18,9 +18,9 @@ def make_parser():
         ("statement : vardef", identity),
         ("statement : fundef", identity),
         ("statement : typedef", identity),
+        ("statement : import", identity),
         # ("statement : opdef", identity),
         # ("statement : export", identity),
-        # ("statement : import", identity),
 
         # Definição de tipos
         ("typedef : 'type' TYPENAME '=' casedeflist", handle_type),
@@ -75,8 +75,8 @@ def make_parser():
         ("atom : TYPENAME atom", handle_type_creation),
         ("atom : NAME", Name),
         ("atom : list", identity),
+        ("atom : tuple", identity),
         ("atom : record", identity),
-        ("atom : tuples", identity),
 
         # Chamada de função
         ("fcall : value '(' ')'", lambda x: Call(x, [])),
@@ -104,13 +104,11 @@ def make_parser():
         # Case
         # ("caseexpr : ...", ...),
 
-        # Listas
+        # Listas/Tuplas
         ("list : '[' ']'", lambda: Expr.List([])),
         ("list : '[' items ']'", lambda x: Expr.List(x)),
-
-        ("tuple : '(' ')'", lambda: Expr.Tuple([])),
-        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x)),
-
+        ("tuple : '(' ')'", lambda: Expr.Tuple(())),
+        ("tuple : '(' elem ',' items ')'", lambda x, xs: Expr.Tuple((x, *xs))),
 
         ("items: elem", lambda x: [x]),
         ("items: elem ',' items", lambda x, z: [x, *z]),
@@ -120,9 +118,6 @@ def make_parser():
         ("record : '{' objvalue '}'", lambda y: Expr.Record(y)),
         ("objvalue : NAME ':' elem", lambda x, z: {x: z}),
         ("objvalue : NAME ':' elem ',' objvalue", lambda k, y, z: {k: y, **z}),
-
-        # Construtor
-        # ("constructor : ...", ...),
     ])
 
 
