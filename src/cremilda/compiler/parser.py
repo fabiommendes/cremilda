@@ -70,8 +70,8 @@ def make_parser():
         ("atom : TYPENAME", Enum),
         ("atom : NAME", Name),
         ("atom : list", identity),
+        ("atom : record", identity),
         ("atom : tuples", identity),
-        # ("atom : record", identity),
 
         # Chamada de função
         ("fcall : value '(' ')'", lambda x: Call(x, [])),
@@ -118,6 +118,9 @@ def make_parser():
 
         # Records
         # ("record : ...", ...),
+        ("record : '{' objvalue '}'", lambda y: Expr.Record(y)),
+        ("objvalue : NAME ':' elem", lambda x, z: {x: z}),
+        ("objvalue : NAME ':' elem ',' objvalue", lambda k, y, z: {k: y, **z}),
 
         # Construtor
         # ("constructor : ...", ...),

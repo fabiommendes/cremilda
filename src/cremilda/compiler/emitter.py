@@ -44,6 +44,12 @@ class to_python_expr:  # noqa: N801
         cond, then, other = map(to_python_expr, [cond, then, other])
         return py.cond(then, if_=cond, else_=other)
 
+    def Record(values):
+        d = {}
+        for i, j in values.items():
+            d[str(i)] = to_python(j)
+        return as_expr(d)
+
     def else_(expr):  # noqa: N802, N805
         raise NotImplementedError(expr)
 
