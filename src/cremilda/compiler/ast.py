@@ -20,6 +20,7 @@ class Expr(Union):
     List = sk.opt(data=list)
     Name = sk.opt(str)
     Not = sk.opt(this)
+    Lambda = sk.opt(fargs=list, expr=Expr)
     Op = sk.opt(op=str, left=this, right=this)
     Or = sk.opt(left=this, right=this)
     Record = sk.opt(data=list)
@@ -31,7 +32,12 @@ class Expr(Union):
         expressão.
         """
         acc = set() if acc is None else acc
-        return self.visit_nodes(required_symbols_visitor, acc)
+        if isinstance(self, Lambda):
+            print(self.expr.required_symbols())
+            acc.update(self.expr.required_symbols() - set(self.fargs))
+        else:
+            self.visit_nodes(required_symbols_visitor, acc)
+        return acc
 
 
 class Stmt(Union):
@@ -89,6 +95,7 @@ Constructor = Expr.Constructor
 Enum = Expr.Enum
 If = Expr.If
 Let = Expr.Let
+Lambda = Expr.Lambda
 List = Expr.List
 Name = Expr.Name
 Not = Expr.Not

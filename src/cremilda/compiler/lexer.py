@@ -10,6 +10,7 @@ class Lexer(ox.Lexer):
     _COMMENT = r'\#[^\n]*'
 
     # Tokens
+    LAMBDA = r'fn'
     STRING = r'"([^\n"](\\")?)*"'
     NUMBER = r'\d+(\.\d+)?([eE][+-]?\d+)?'
     NAME = r'[a-z_][a-z0-9_]*'

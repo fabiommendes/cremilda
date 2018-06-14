@@ -1,7 +1,7 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda
 from .lexer import tokenize
 
 
@@ -46,6 +46,7 @@ def make_parser():
         # ("expr : caseexpr", identity),
 
         # Elementos
+        ("elem : lambda", identity),
         ("elem : value", identity),
         ("elem : value OP value", op_call),
         ("elem : ifexpr", identity),
@@ -53,7 +54,6 @@ def make_parser():
         ("elem : '-' value", lambda x: Expr.Call(Expr.Name('neg'), [x])),
         ("elem : 'not' value", lambda x: Expr.Call(Expr.Name('negate'), [x])),
         # ("elem : unaryop", identity),
-        # ("elem : lambda", identity),
         # ("elem : constructor", identity),
 
         # Valores
@@ -70,6 +70,7 @@ def make_parser():
         ("atom : TYPENAME", Enum),
         ("atom : NAME", Name),
         ("atom : list", identity),
+        ("atom : tuples", identity),
         # ("atom : record", identity),
 
         # Chamada de função
@@ -87,7 +88,7 @@ def make_parser():
         # ("unary : ...", ...),
 
         # Lambdas
-        # ("lambda : ...", ...),
+        ("lambda : 'fn' '(' defargs ')' '=>' expr", lambd_def),
 
         # If
         ("ifexpr : 'if' value 'then' elem 'else' elem", Expr.If),
@@ -110,6 +111,11 @@ def make_parser():
         ("items: elem ',' items", lambda x, z: [x, *z]),
         ("items: elem ',' items ','", lambda x, z: [x, *z]),
 
+        # Tuples
+        ("tuples : '(' ')'", lambda: Expr.Tuple(())),
+        ("tuples : '(' items ')'", lambda x: Expr.Tuple(tuple(x))),
+        # ("items_tuple: elem ',' items_tuple ','", lambda x, z: tuple(x, *z)),
+
         # Records
         # ("record : ...", ...),
 
@@ -124,6 +130,7 @@ def make_parser():
 
 # Expr helpers
 op_call = (lambda x, op, y: BinOp(op, x, y))
+lambd_def = (lambda args, expr: Lambda(args, expr))
 
 
 #

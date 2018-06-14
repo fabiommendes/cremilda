@@ -1,7 +1,8 @@
 import sidekick as sk
 from ox.backend import python as py
 from ox.backend.python import as_expr, var, let, function, return_
-from ox.backend.python.helpers import import_from
+from ox.backend.python.helpers import import_from , lambd
+from ox.backend.python.helpers import lambd
 from .ast import Expr, Stmt
 
 
@@ -34,6 +35,11 @@ class to_python_expr:  # noqa: N801
         func = to_python_expr(func)
         return func(*args)
 
+    def Lambda(fargs, expr):
+        args = map(var, fargs)
+        expr = to_python_expr(expr)
+        return lambd(*args)[expr]
+
     def If(cond, then, other):  # noqa: N802, N805
         cond, then, other = map(to_python_expr, [cond, then, other])
         return py.cond(then, if_=cond, else_=other)
@@ -43,6 +49,9 @@ class to_python_expr:  # noqa: N801
 
     def List(values):
         return as_expr([to_python(x) for x in values])
+
+    def Tuple(values):
+        return as_expr(tuple(to_python(x) for x in values))
 
 
 @sk.casedispatch.from_namespace(Stmt)
