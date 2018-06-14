@@ -1,7 +1,7 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Tuple, List
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Tuple, List, Lambda
 from .lexer import tokenize
 
 #
@@ -92,7 +92,7 @@ def make_parser():
         # ("unary : ...", ...),
 
         # Lambdas
-        # ("lambda : ...", ...),
+        ("lambda : 'fn' '(' defargs ')' '=>' expr", lambd_def),
 
         # If
         ("ifexpr : 'if' value 'then' elem 'else' elem", Expr.If),
@@ -107,21 +107,15 @@ def make_parser():
         ("list : '[' ']'", lambda: Expr.List([])),
         ("list : '[' items ']'", lambda x: Expr.List(x)),
 
-        ("tuple : '(' ')'", lambda: Expr.Tuple([])),
-        ("tuple : '(' items ')'", lambda x: Expr.Tuple(tuple(x)),
-
-
         ("items: elem", lambda x: [x]),
         ("items: elem ',' items", lambda x, z: [x, *z]),
         ("items: elem ',' items ','", lambda x, z: [x, *z]),
 
         # Tuples
         ("tuples : '(' ')'", lambda: Expr.Tuple(())),
-        ("tuples : '(' items ')'", lambda x: Expr.Tuple(tuple(x))),
-        # ("items_tuple: elem ',' items_tuple ','", lambda x, z: tuple(x, *z)),
+        ("tuples : '(' elem ',' items ')'", lambda x, xs: Expr.Tuple((x, *xs))),
 
         # Records
-        # ("record : ...", ...),
         ("record : '{' objvalue '}'", lambda y: Expr.Record(y)),
         ("objvalue : NAME ':' elem", lambda x, z: {x: z}),
         ("objvalue : NAME ':' elem ',' objvalue", lambda k, y, z: {k: y, **z}),
