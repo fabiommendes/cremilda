@@ -1,8 +1,7 @@
 import sidekick as sk
 from ox.backend import python as py
 from ox.backend.python import as_expr, var, let, function, return_
-from ox.backend.python.helpers import import_from , lambd
-from ox.backend.python.helpers import lambd
+from ox.backend.python.helpers import import_from, lambd
 from .ast import Expr, Stmt
 
 

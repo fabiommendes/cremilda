@@ -12,9 +12,10 @@ from .types import (
     List, Cons, Nil
 )
 
+
 def __create_type(name, cases):
     import sidekick as sk
-    
+
     namespace = {}
     for casename, typename in cases:
         if typename is None:
@@ -29,7 +30,6 @@ def __create_type(name, cases):
 def type_from_name(typename):
     typemap = {'Any': object, 'String': str, 'Number': float}
     return typemap[typename]
-
 
 
 # ==============================================================================
