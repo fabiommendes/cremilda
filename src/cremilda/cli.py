@@ -4,7 +4,7 @@ import sys
 import click
 
 from .compiler import transpile, compile_module
-
+from .compiler import SemanticError
 
 # Usamos a biblioteca click: http://click.pocoo.org/
 @click.command(name='cremilda')
@@ -15,7 +15,11 @@ def cremilda(arquivo, output, run):
     """
     Compila ARQUIVO de entrada e salva resultado na SAIDA ou no terminal.
     """
-    main(arquivo, output, run)
+
+    try:
+        main(arquivo, output, run)
+    except SemanticError as exc:
+        exit('ERROR: %s' % exc)
 
 
 def main(path, output, run):

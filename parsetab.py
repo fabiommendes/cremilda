@@ -5,9 +5,7 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = '9E734E71A6E2E40B4438B2D0E2315036'
-    
-_lr_action_items = {'NAME':([0,3,4,7,8,9,10,11,12,13,14,15,17,18,19,23,24,],[2,4,-3,4,-13,4,4,4,-4,-5,-6,4,-10,-11,-12,-1,-2,]),'$end':([1,4,5,6,7,8,12,13,14,16,17,18,19,22,23,24,],[0,-3,-7,-9,-15,-13,-4,-5,-6,-14,-10,-11,-12,-8,-1,-2,]),'COLON':([2,],[3,]),'TILDE':([3,4,7,8,10,11,12,13,14,15,17,18,19,23,24,],[9,-3,9,-13,9,9,-4,-5,-6,9,-10,-11,-12,-1,-2,]),'LPAREN':([3,4,7,8,9,10,11,12,13,14,15,17,18,19,23,24,],[10,-3,10,-13,10,10,10,-4,-5,-6,10,-10,-11,-12,-1,-2,]),'LBRACK':([3,4,7,8,9,10,11,12,13,14,15,17,18,19,23,24,],[11,-3,11,-13,11,11,11,-4,-5,-6,11,-10,-11,-12,-1,-2,]),'TOK_NAME':([3,4,7,8,9,10,11,12,13,14,15,17,18,19,23,24,],[12,-3,12,-13,12,12,12,-4,-5,-6,12,-10,-11,-12,-1,-2,]),'LITERAL':([3,4,7,8,9,10,11,12,13,14,15,17,18,19,23,24,],[13,-3,13,-13,13,13,13,-4,-5,-6,13,-10,-11,-12,-1,-2,]),'BACKTICK':([3,4,7,8,9,10,11,12,13,14,15,17,18,19,23,24,],[14,-3,14,-13,14,14,14,-4,-5,-6,14,-10,-11,-12,-1,-2,]),'TIMES':([4,8,12,13,14,23,24,],[-3,17,-4,-5,-6,-1,-2,]),'PLUS':([4,8,12,13,14,23,24,],[-3,18,-4,-5,-6,-1,-2,]),'PIPE':([4,6,7,8,12,13,14,16,17,18,19,23,24,],[-3,15,-15,-13,-4,-5,-6,-14,-10,-11,-12,-1,-2,]),'RPAREN':([4,6,7,8,12,13,14,16,17,18,19,20,22,23,24,],[-3,-9,-15,-13,-4,-5,-6,-14,-10,-11,-12,23,-8,-1,-2,]),'RBRACK':([4,6,7,8,12,13,14,16,17,18,19,21,22,23,24,],[-3,-9,-15,-13,-4,-5,-6,-14,-10,-11,-12,24,-8,-1,-2,]),}
+
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +14,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'definition':([0,],[1,]),'expr':([3,10,11,15,],[5,20,21,22,]),'term':([3,7,10,11,15,],[6,16,6,6,6,]),'simple':([3,7,10,11,15,],[7,7,7,7,7,]),'atom':([3,7,9,10,11,15,],[8,8,19,8,8,8,]),}
+
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,20 +23,41 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> definition","S'",1,None,None,None),
-  ('atom -> LPAREN expr RPAREN','atom',3,'p_atom_1','ply.py',126),
-  ('atom -> LBRACK expr RBRACK','atom',3,'p_atom_2','ply.py',126),
-  ('atom -> NAME','atom',1,'p_atom_3','ply.py',126),
-  ('atom -> TOK_NAME','atom',1,'p_atom_4','ply.py',126),
-  ('atom -> LITERAL','atom',1,'p_atom_5','ply.py',126),
-  ('atom -> BACKTICK','atom',1,'p_atom_6','ply.py',126),
-  ('definition -> NAME COLON expr','definition',3,'p_definition_1','ply.py',126),
-  ('expr -> term PIPE expr','expr',3,'p_expr_1','ply.py',126),
-  ('expr -> term','expr',1,'p_expr_2','ply.py',126),
-  ('simple -> atom TIMES','simple',2,'p_simple_1','ply.py',126),
-  ('simple -> atom PLUS','simple',2,'p_simple_2','ply.py',126),
-  ('simple -> TILDE atom','simple',2,'p_simple_3','ply.py',126),
-  ('simple -> atom','simple',1,'p_simple_4','ply.py',126),
-  ('term -> simple term','term',2,'p_term_1','ply.py',126),
-  ('term -> simple','term',1,'p_term_2','ply.py',126),
+
+  ("S' -> module","S'",1,None,None,None),
+  ('atom -> NUMBER','atom',1,'p_atom_1','ply.py',126),
+  ('atom -> STRING','atom',1,'p_atom_2','ply.py',126),
+  ('atom -> TRUE','atom',1,'p_atom_3','ply.py',126),
+  ('atom -> FALSE','atom',1,'p_atom_4','ply.py',126),
+  ('atom -> TYPENAME','atom',1,'p_atom_5','ply.py',126),
+  ('atom -> NAME','atom',1,'p_atom_6','ply.py',126),
+  ('atom -> list','atom',1,'p_atom_7','ply.py',126),
+  ('defargs -> NAME','defargs',1,'p_defargs_1','ply.py',126),
+  ('defargs -> NAME COMMA_ defargs','defargs',3,'p_defargs_2','ply.py',126),
+  ('elem -> value','elem',1,'p_elem_1','ply.py',126),
+  ('elem -> value OP value','elem',3,'p_elem_2','ply.py',126),
+  ('elem -> ifexpr','elem',1,'p_elem_3','ply.py',126),
+  ('elem -> PLUS_ value','elem',2,'p_elem_4','ply.py',126),
+  ('elem -> MINUS_ value','elem',2,'p_elem_5','ply.py',126),
+  ('elem -> NOT_ value','elem',2,'p_elem_6','ply.py',126),
+  ('expr -> elem','expr',1,'p_expr_1','ply.py',126),
+  ('fargs -> elem','fargs',1,'p_fargs_1','ply.py',126),
+  ('fargs -> elem COMMA_ fargs','fargs',3,'p_fargs_2','ply.py',126),
+  ('fcall -> value LPAREN_ RPAREN_','fcall',3,'p_fcall_1','ply.py',126),
+  ('fcall -> value LPAREN_ fargs RPAREN_','fcall',4,'p_fcall_2','ply.py',126),
+  ('fundef -> NAME LPAREN_ defargs RPAREN_ EQUAL_ expr','fundef',6,'p_fundef_1','ply.py',126),
+  ('ifexpr -> IF_ value THEN_ elem ELSE_ elem','ifexpr',6,'p_ifexpr_1','ply.py',126),
+  ('items -> elem','items',1,'p_items_1','ply.py',126),
+  ('items -> elem COMMA_ items','items',3,'p_items_2','ply.py',126),
+  ('items -> elem COMMA_ items COMMA_','items',4,'p_items_3','ply.py',126),
+  ('list -> TK_SYMB_12_ TK_SYMB_13_','list',2,'p_list_1','ply.py',126),
+  ('list -> TK_SYMB_12_ items TK_SYMB_13_','list',3,'p_list_2','ply.py',126),
+  ('module -> statement SEMICOLON_','module',2,'p_module_1','ply.py',126),
+  ('module -> statement SEMICOLON_ module','module',3,'p_module_2','ply.py',126),
+  ('statement -> vardef','statement',1,'p_statement_1','ply.py',126),
+  ('statement -> fundef','statement',1,'p_statement_2','ply.py',126),
+  ('value -> atom','value',1,'p_value_1','ply.py',126),
+  ('value -> fcall','value',1,'p_value_2','ply.py',126),
+  ('value -> LPAREN_ expr RPAREN_','value',3,'p_value_3','ply.py',126),
+  ('vardef -> NAME EQUAL_ expr','vardef',3,'p_vardef_1','ply.py',126),
 ]
