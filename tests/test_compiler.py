@@ -52,7 +52,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('x = {foo: "bar"}; main = x.foo;') == {'foo': 'bar'}['foo']
         assert self.get_main('main = {foo: "bar"}.foo;') == 'bar'
 
-    @flag('amarela')
+    # @flag('amarela')
     def test_support_for_tag_constructor(self):
         assert self.get_main('main = Just 42;') == Just(42)
         assert self.get_main('main = Nothing;') == Nothing
