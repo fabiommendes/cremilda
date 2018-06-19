@@ -1,8 +1,7 @@
 import sidekick as sk
 from ox.backend import python as py
 from ox.backend.python import as_expr, var, let, function, return_
-from ox.backend.python.helpers import import_from , lambd
-from ox.backend.python.helpers import lambd
+from ox.backend.python.helpers import import_from, lambd
 from .ast import Expr, Stmt
 
 
@@ -75,7 +74,13 @@ class to_python_stmt:  # noqa: N801
         return function[name](*fargs)[return_(expr)]
 
     def Import(module, names):
-        return import_from(module, names)
+        import_from_list = []
+        for name in names:
+            if isinstance(name, str):
+                import_from_list.append(import_from(module, [name]))
+            elif isinstance(name, dict):
+                import_from_list.append(import_from(module, name))
+        return import_from_list
 
     def else_(expr):  # noqa: N802, N805
         raise NotImplementedError(expr)

@@ -135,8 +135,13 @@ class Module:
         list_imports = []
         for module, import_node in self.imports.items():
             list_imports.append(module)
-            for k, v in import_node.names.items():
-                list_imports.append(v)
+            for name in import_node.names:
+                if isinstance(name, str):
+                    list_imports.append(name)
+                elif isinstance(name, dict):
+                    for k, v in name.items():
+                        list_imports.append(k)
+                        list_imports.append(v)
         return {*self.functions, *self.constants, *self.typedefs, *list_imports}
 
     def get_default_imports(self):
@@ -179,7 +184,7 @@ def to_python_imports(imports):
     """
     py_imports = []
     for name, imp in imports.items():
-        py_imports.append(to_python(imp))
+        py_imports = to_python(imp)
     return py_imports
 
 
