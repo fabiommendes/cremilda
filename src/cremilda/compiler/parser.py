@@ -1,10 +1,9 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda, Constructor
+from .ast import BinOp, Call, Atom, Name, Expr, Stmt, Lambda
 from .lexer import tokenize
 
-from cremilda.runtime import Nothing
 
 #
 # Gramática

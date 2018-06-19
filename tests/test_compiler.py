@@ -219,7 +219,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('import (sqrt) from "math"; '
                              'main = sqrt(4);') == 2
 
-    #@flag('amarela')
+    # @flag('amarela')
     def test_support_for_explicitly_imported_names_with_aliases(self):
         assert self.get_main('import (pi, sin as seno) from "math"; '
                              'main = seno(pi);') == sin(pi)
