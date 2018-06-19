@@ -21,7 +21,7 @@ class Expr(Union):
     Name = sk.opt(str)
     Not = sk.opt(this)
     Lambda = sk.opt(fargs=list, expr=Expr)
-    Op = sk.opt(op=str, left=this, right=this)
+    OpChain = sk.opt(value=list)
     Or = sk.opt(left=this, right=this)
     Record = sk.opt(data=dict)
     Tuple = sk.opt(data=tuple)
@@ -99,7 +99,7 @@ Lambda = Expr.Lambda
 List = Expr.List
 Name = Expr.Name
 Not = Expr.Not
-Op = Expr.Op
+OpChain = Expr.OpChain
 Or = Expr.Or
 Record = Expr.Record
 Tuple = Expr.Tuple

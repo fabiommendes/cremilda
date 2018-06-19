@@ -220,40 +220,40 @@ reverse_compose = (lambda f, g: lambda *args: f(g(*args)))  # f << g
 # Registra operadores binários
 __default_operators.update({
     # Aplicação de funções
-    '|>': __left_op(1, '|>', pipe),
-    '<|': __right_op(1, '<|', reverse_pipe),
+    '|>': __left_op(1, '|>', 'pipe'),
+    '<|': __right_op(1, '<|', 'reverse_pipe'),
 
     # Listas e sequências
-    '::': __left_op(2, '::', cons),
-    '++': __left_op(3, '++', concat),
+    '::': __left_op(2, '::', 'cons'),
+    '++': __left_op(3, '++', 'concat'),
 
     # Operações booleanas
-    'or': __left_op(4, '::', cons),
-    'and': __left_op(5, '++', concat),
+    'or': __left_op(4, 'or', 'cons'),
+    'and': __left_op(5, 'and', 'concat'),
 
     # Comparações
-    '==': __left_op(6, '==', equal),
-    '!=': __left_op(6, '!=', not_equal),
+    '==': __left_op(6, '==', 'equal'),
+    '!=': __left_op(6, '!=', 'not_equal'),
     # 'is': __left_op(6, 'is', identical), ?
     # 'is not': __left_op(6, 'is not', not_identical), ?
-    '<': __left_op(7, '<', lt),
-    '>': __left_op(7, '>', gt),
-    '<=': __left_op(7, '<=', le),
-    '>=': __left_op(7, '>=', ge),
+    '<': __left_op(7, '<', 'lt'),
+    '>': __left_op(7, '>', 'gt'),
+    '<=': __left_op(7, '<=', 'le'),
+    '>=': __left_op(7, '>=', 'ge'),
     # 'in': __left_op(7, 'in', is_contained), ?
     # 'not in': __left_op(7, 'not in', is_not_contained), ?
 
     # Aritimeticos
-    '+': __left_op(8, '+', add),
-    '-': __left_op(8, '-', sub),
-    '*': __left_op(9, '*', mul),
-    '/': __left_op(9, '/', div),
-    '%': __left_op(9, '%', mod),
-    '**': __left_op(10, '**', pow),
+    '+': __left_op(8, '+', 'add'),
+    '-': __left_op(8, '-', 'sub'),
+    '*': __left_op(9, '*', 'mul'),
+    '/': __left_op(9, '/', 'div'),
+    '%': __left_op(9, '%', 'mod'),
+    '**': __right_op(10, '**', 'pow'),
 
     # Composição de funções
-    '>>': __left_op(11, '<<', compose),
-    '<<': __right_op(11, '>>', reverse_compose),
+    '>>': __left_op(11, '<<', 'compose'),
+    '<<': __right_op(11, '>>', 'reverse_compose'),
 })
 
 # ==============================================================================

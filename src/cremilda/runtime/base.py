@@ -37,7 +37,7 @@ class Operator(sk.Record):
     }
 
     symbol: str = sk.field(str)
-    function: typing.Callable = sk.field(typing.Callable)
+    function: str = sk.field(str)
     assoc: Assoc = sk.field(Assoc)
     precedence: int = sk.field(int)
 

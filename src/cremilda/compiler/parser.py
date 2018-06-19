@@ -1,8 +1,11 @@
 import ox
 from ox.helpers import singleton, identity, cons
 
-from .ast import BinOp, Call, Atom, Name, Expr, Stmt, Lambda
+from .ast import BinOp, Call, Atom, Name, Enum, Expr, Stmt, Lambda
 from .lexer import tokenize
+from ..runtime.builtins import __default_operators as OPERATORS
+from ..runtime.base import Assoc
+
 
 
 #
@@ -28,7 +31,7 @@ def make_parser():
         ("casedeflist : casedef '|' casedeflist", cons),
         ("casedef : TYPENAME TYPENAME", lambda x, y: (x, y)),
         ("casedef : TYPENAME", lambda x: (x, None)),
-
+        
         # Definição de operadores
         # ("opdef : ...", ...),
 
@@ -56,13 +59,20 @@ def make_parser():
         # Elementos
         ("elem : lambda", identity),
         ("elem : value", identity),
-        ("elem : value OP value", op_call),
+        ("elem : opchain", handle_operators),
         ("elem : ifexpr", identity),
         ("elem : '+' value", lambda x: Expr.Call(Expr.Name('pos'), [x])),
         ("elem : '-' value", lambda x: Expr.Call(Expr.Name('neg'), [x])),
         ("elem : 'not' value", lambda x: Expr.Call(Expr.Name('negate'), [x])),
         # ("elem : unaryop", identity),
         # ("elem : constructor", identity),
+
+        # Operadores válidos
+        ("op : OP", identity),
+        ("op : '+'", lambda: '+'),
+        ("op : '-'", lambda: '-'),
+        ("opchain : value op value", lambda x, y, z: [x, y, z]),
+        ("opchain : value op opchain", lambda x, y, z: [x, y, *z]),
 
         # Valores
         ("value : atom", identity),
@@ -136,7 +146,7 @@ lambd_def = (lambda args, expr: Lambda(args, expr))
 
 def handle_type(name, definitions):
     deflist = List([List([Atom(x), Atom(y)]) for x, y in definitions])
-    return Stmt.Assign(name, Call(Name('__create_type'), [Atom(name), deflist]))
+    return Stmt.Assign(name, Call(Name('__create_type'), [Atom(name), deflist]))    
 
 
 def handle_type_creation(name, expr):
@@ -148,6 +158,46 @@ def handle_list_imports_module(list_imports, module):
         return Stmt.Import(module[1:-1], [list_imports])
     elif isinstance(list_imports, list):
         return Stmt.Import(module[1:-1], [*list_imports])
+
+
+from pprint import pprint
+def handle_operators(chain):
+    # Caso trivial com apenas 1 operador
+    if len(chain) == 3:
+        x, op, y = chain
+        op_info = OPERATORS[op]
+        func_name = op_info.function
+        return Call(Name(func_name), [x, y])
+
+    # Todos operadores sao iguais: testamos a associatividade
+    ops = [OPERATORS[op] for op in chain[1::2]]
+    if len(set(ops)) == 1:
+        op_info, = set(ops)
+        func_name = op_info.function
+        operands = chain[0::2]
+
+        if op_info.assoc == Assoc.LEFT:
+            x, y, *operands = operands
+            expr = Call(Name(func_name), [x, y])
+            while operands:
+                z = operands.pop(0)
+                expr = Call(Name(func_name), [expr, z])
+            return expr
+        
+        else:
+            y = operands.pop()
+            x = operands.pop()
+            expr = Call(Name(func_name), [x, y])
+            while operands:
+                z = operands.pop()
+                expr = Call(Name(func_name), [z, expr])
+            return expr
+
+    # Problema arbitrário: níveis de precedencia distintos
+    idx, op = max(enumerate(ops), key=lambda x: x[1].precedence)
+
+    pprint(locals())
+    raise SystemExit(1)
 
 
 #
