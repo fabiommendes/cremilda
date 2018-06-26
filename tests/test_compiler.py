@@ -53,7 +53,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('x = {foo: "bar"}; main = x.foo;') == {'foo': 'bar'}['foo']
         assert self.get_main('main = {foo: "bar"}.foo;') == 'bar'
 
-    @flag('amarela')
+    # @flag('amarela')
     def test_support_for_tag_constructor(self):
         assert self.get_main('main = Just 42;') == Just(42)
         assert self.get_main('main = Nothing;') == Nothing
@@ -219,7 +219,7 @@ class TestCompilationToPythonModule:
         assert self.get_main('import (sqrt) from "math"; '
                              'main = sqrt(4);') == 2
 
-    #@flag('amarela')
+    # @flag('amarela')
     def test_support_for_explicitly_imported_names_with_aliases(self):
         assert self.get_main('import (pi, sin as seno) from "math"; '
                              'main = seno(pi);') == sin(pi)

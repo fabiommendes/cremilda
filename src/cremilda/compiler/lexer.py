@@ -30,6 +30,9 @@ class Lexer(ox.Lexer):
     r_FROM = r'from'
     r_TYPE = r'type'
 
+    r_JUST = r'Just'
+    r_NOTHING = r'Nothing'
+
 
 #
 # Funções públicas
